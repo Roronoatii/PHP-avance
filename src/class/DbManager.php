@@ -17,18 +17,25 @@ class DbManager {
 
     // return l'id inseré
     function insert(string $sql, array $data) {
-        // $this->db->prepare
+        $var = $this->db->prepare($sql);
+        $var->execute($data);
     }
 
     function insert_advanced(DbObject $dbObj) {
-
     }
 
     function select(string $sql, array $data, string $className) {
+        $var = $this->db->prepare($sql);
+        $var->execute();
+        $var->setFetchMode(PDO::FETCH_CLASS, $className);
+        $result = $var->fetchAll();
+        return $result;
 
     }
 
     function getById(string $tableName, $id, string $className) {
+        $var = $this->db->prepare('SELECT * FROM $tableName WHERE id = ?');
+        $var->execute([$id]);
 
     }
 
@@ -45,7 +52,8 @@ class DbManager {
     }
 
     function removeById(string $tableName, $id) {
-
+        $var = $this->db->prepare('DELETE FROM $tableName WHERE id = ?');
+        $var->execute([$id]);
     }
 
     function update(string $tableName, array $data) {

@@ -6,7 +6,7 @@ require_once __DIR__ . '/../src/init.php';
 
 $stmh = $db->prepare('SELECT * FROM contact_forms');
 $stmh->execute();
-$stmh->setFetchMode(PDO::FETCH_CLASS, 'ContactForm');;
+$stmh->setFetchMode(PDO::FETCH_CLASS, 'ContactForm');
 // fetchAll = tableau de resultat
 // fetch = 1 resultat
 $forms = $stmh->fetchAll();
