@@ -23,4 +23,14 @@ function createAccount($firstname, $lastname, $email, $password, $birthdate)
 	VALUES (?, ?, ?, ?, ?, ?)";
 	$dbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
 }
+function requestRequired($role, $requiredLvl){
+	global $dbManager;
+
+		$role = $dbManager->getBy('roles', 'name', $role, 'User');
+
+	if($role['id'] < $requiredLvl) {
+		// header('contact.php');
+		echo "act III";
+	}
+}
 ?>
