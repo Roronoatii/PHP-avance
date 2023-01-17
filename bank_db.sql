@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : mar. 17 jan. 2023 à 13:29
+-- Généré le : mar. 17 jan. 2023 à 16:38
 -- Version du serveur :  5.7.34
 -- Version de PHP : 8.0.8
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `currencies` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `dollar_ratio` decimal(11,4) NOT NULL
+  `dollar_ratio` decimal(11,7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -38,11 +38,11 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `dollar_ratio`) VALUES
-(1, 'EUR', '0.9200'),
-(2, 'DOLLAR', '1.0000'),
-(3, 'YEN', '129.0000'),
-(4, 'BITCOIN', '21239.0000'),
-(5, 'RUBLE', '68.6600');
+(1, 'EUR', '0.9200000'),
+(2, 'DOLLAR', '1.0000000'),
+(3, 'YEN', '0.0077519'),
+(4, 'BITCOIN', '0.0000471'),
+(5, 'RUBLE', '0.0145645');
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,8 @@ CREATE TABLE `deposits` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `owner_id` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL
+  `amount` decimal(10,4) NOT NULL,
+  `id_currency` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -103,7 +104,8 @@ CREATE TABLE `transactions` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sender` int(11) NOT NULL,
   `receiver` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL
+  `amount` decimal(10,4) NOT NULL,
+  `id_currency` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -114,7 +116,7 @@ CREATE TABLE `transactions` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL DEFAULT '1',
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `iban` varchar(27) NOT NULL,
@@ -133,7 +135,8 @@ CREATE TABLE `withdrawals` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `owner_id` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL
+  `amount` decimal(10,4) NOT NULL,
+  `id_currency` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -151,7 +154,8 @@ ALTER TABLE `currencies`
 --
 ALTER TABLE `deposits`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `owner_id` (`owner_id`);
+  ADD KEY `owner_id` (`owner_id`),
+  ADD KEY `id_currency` (`id_currency`);
 
 --
 -- Index pour la table `roles`
@@ -173,7 +177,8 @@ ALTER TABLE `storage`
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sender` (`sender`),
-  ADD KEY `receiver` (`receiver`);
+  ADD KEY `receiver` (`receiver`),
+  ADD KEY `id_currency` (`id_currency`);
 
 --
 -- Index pour la table `users`
@@ -187,7 +192,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `withdrawals`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `owner_id` (`owner_id`);
+  ADD KEY `owner_id` (`owner_id`),
+  ADD KEY `id_currency` (`id_currency`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -237,7 +243,8 @@ ALTER TABLE `withdrawals`
 -- Contraintes pour la table `deposits`
 --
 ALTER TABLE `deposits`
-  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `deposits_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`);
 
 --
 -- Contraintes pour la table `storage`
@@ -251,7 +258,8 @@ ALTER TABLE `storage`
 --
 ALTER TABLE `transactions`
   ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`receiver`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`);
 
 --
 -- Contraintes pour la table `users`
@@ -263,7 +271,8 @@ ALTER TABLE `users`
 -- Contraintes pour la table `withdrawals`
 --
 ALTER TABLE `withdrawals`
-  ADD CONSTRAINT `withdrawals_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `withdrawals_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `withdrawals_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
