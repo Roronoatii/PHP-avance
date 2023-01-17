@@ -27,28 +27,29 @@ class DbManager
 
     function insert_advanced(DbObject $dbObj)
     {
-        $sql = "INSERT INTO " . $dbObj->getTableName() . " (";
-        $values = "VALUES (";
+        $tableName = $dbObj->getTableName();
+        $columns = [];
+        $values = [];
         $data = [];
-        foreach ($dbObj->getColumns() as $column) {
-            $sql .= $column . ", ";
-            $values .= "?, ";
-            $data[] = $dbObj->$column;
+        foreach ($dbObj as $key => $value) {
+            if ($key != 'id' && $key != 'created_at') {
+                $columns[] = $key;
+                $values[] = '?';
+                $data[] = $value;
+            }
         }
-        $sql = substr($sql, 0, -2) . ") ";
-        $values = substr($values, 0, -2) . ") ";
-        $sql .= $values;
-        $this->insert($sql, $data);
-
-        return $this->db->lastInsertId();
+        $columns = implode(', ', $columns); // turn array into string, separated by ', '
+        $values = implode(', ', $values); // turn array into string, separated by ', '
+        $sql = "INSERT INTO " . $tableName . " (" . $columns . ") VALUES (" . $values . ")";
+        return $this->insert($sql, $data);
     }
 
     function select(string $sql, array $data, string $className)
     {
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($data);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, $className);
-        return $stmt->fetch();
+        $query = $this->db->prepare($sql);
+        $query->execute($data);
+        $query->setFetchMode(PDO::FETCH_CLASS, $className);
+        return $query->fetch();
     }
 
     function getById(string $tableName, $id, string $className)
@@ -59,8 +60,10 @@ class DbManager
 
     function getById_advanced($id, string $className)
     {
-        $dbObj = new $className();
-        $sql = "SELECT * FROM " . $dbObj->getTableName() . " WHERE id = ?";
+        $class = new $className();
+        $tableName = $class->getTableName();
+
+        $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
         return $this->select($sql, [$id], $className);
     }
 
@@ -72,9 +75,11 @@ class DbManager
 
     function getBy_advanced(string $column, $value, string $className)
     {
-        $dbObj = new $className();
-        $sql = "SELECT * FROM " . $dbObj->getTableName() . " WHERE " . $column . " = ?";
-        return $this->select($sql, [$value], $className);
+        $class = new $className();
+        $tableName = $class->getTableName();
+
+        $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = '" . $value . "'";
+        return $this->select($sql, [], $className);
     }
 
     function removeById(string $tableName, $id)
@@ -82,18 +87,23 @@ class DbManager
         $sql = "DELETE FROM " . $tableName . " WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
+        return $id;
     }
 
     function update(string $tableName, array $data)
     {
         $sql = "UPDATE " . $tableName . " SET ";
-        $id = $data['id'];
-        unset($data['id']);
         foreach ($data as $key => $value) {
-            $sql .= $key . " = ?, ";
+            if ($key != 'id') {
+                $sql .= $key . " = ?, ";
+            }
         }
-        $sql = substr($sql, 0, -2) . " WHERE id = ?";
+        $sql = substr($sql, 0, -2) . " WHERE id = ?"; // substr($sql, 0, -2) remove last comma
+
+        $id = $data['id'];
+        $data = array_values($data);
         $data[] = $id;
+        array_shift($data); // remove first element
         $stmt = $this->db->prepare($sql);
         $stmt->execute($data);
         return $id;
@@ -101,19 +111,11 @@ class DbManager
 
     function update_advanced(DbObject $dbObj)
     {
-        $sql = "UPDATE " . $dbObj->getTableName() . " SET ";
-        $id = $dbObj->id;
-        foreach ($dbObj->getColumns() as $column) {
-            $sql .= $column . " = ?, ";
-        }
-        $sql = substr($sql, 0, -2) . " WHERE id = ?";
+        $tableName = $dbObj->getTableName();
         $data = [];
-        foreach ($dbObj->getColumns() as $column) {
-            $data[] = $dbObj->$column;
+        foreach ($dbObj as $key => $value) {
+            $data[$key] = $value;
         }
-        $data[] = $id;
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($data);
+        return $this->update($tableName, $data);
     }
-
 }
