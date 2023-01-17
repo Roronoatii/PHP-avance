@@ -1,22 +1,23 @@
 <?php
 
 require_once __DIR__ . '/../src/init.php';
-// $db
-// $_SESSION
 
-$page_title = 'Home page';
+$page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 ?>
 
 <body>
 
-    <div>
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+
+    <section id="banner">
         <h1>LA SUPER BANQUE</h1>
+    </section>
 
-        <h8>La banque qui vous accompagne</h8>
-    </div>
-
+    <section id="intro">
+        <p>La banque qui vous accompagne</p>
+    </section>
 
     <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
 </body>
