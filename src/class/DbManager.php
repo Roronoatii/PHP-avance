@@ -95,17 +95,14 @@ class DbManager
         $sql = "UPDATE " . $tableName . " SET ";
         foreach ($data as $key => $value) {
             if ($key != 'id') {
-                $sql .= $key . " = ?, ";
+                $sql .= $key . " = '" . $value . "', ";
             }
         }
         $sql = substr($sql, 0, -2) . " WHERE id = ?"; // substr($sql, 0, -2) remove last comma
 
         $id = $data['id'];
-        $data = array_values($data);
-        $data[] = $id;
-        array_shift($data); // remove first element
         $stmt = $this->db->prepare($sql);
-        $stmt->execute($data);
+        $stmt->execute($id);
         return $id;
     }
 

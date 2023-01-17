@@ -75,9 +75,12 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
     $updated = $dbManager->update(
         'contact_forms',
         [
-            'id' => 15,
+            'id' => 1,
+
+
+
             'fullname' => 'New fullname',
-            'phone' => 'jhdufhdufh',
+            'phone' => 'lol',
         ]
     );
 
