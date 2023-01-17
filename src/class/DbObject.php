@@ -2,8 +2,8 @@
 
 class DbObject
 {
-	private const TABLE_NAME = '';
-	private $columns = [];
+	protected const TABLE_NAME = '';
+	protected $created_at;
 
 	public function getCreatedAt()
 	{
@@ -14,21 +14,5 @@ class DbObject
 	public function getTableName()
 	{
 		return static::TABLE_NAME;
-	}
-
-	public function getColumns()
-	{
-		// $columns = [];
-		// foreach ($this as $key => $value) {
-		// 	if ($key != 'id') {
-		// 		$columns[] = $key;
-		// 	}
-		// }
-		// return $columns;
-		foreach ($this->columns as $key => $value) {
-			if ($key != 'id') {
-				$columns[] = $key;
-			}
-		}
 	}
 }
