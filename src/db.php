@@ -10,4 +10,9 @@ try {
 	die('Erreur MySQL. ' . $e->getMessage());
 }
 
+// function requestRequired($roles){
+// 	$role = getby($roles, $id, '1000',)
+// 	if($role['id'] > fushuf)
+// }
+
 ?>
