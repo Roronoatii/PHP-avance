@@ -3,7 +3,7 @@
 $config = [
     'db' => [
         'host' => 'localhost',
-        'name' => 'db_php_av',
+        'name' => 'bank_db',
         'port' => 8889,
         'user' => 'root',
         'pass' => 'root'
