@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once __DIR__ . '/DbObject.php';
 
@@ -8,70 +8,111 @@ require_once __DIR__ . '/DbObject.php';
  * Complétez les fonctions suivantes pour les faires fonctionner
  */
 
-class DbManager {
+class DbManager
+{
     private $db;
 
-    function __construct(PDO $db) {
+    function __construct(PDO $db)
+    {
         $this->db = $db;
     }
 
     // return l'id inseré
-    function insert(string $sql, array $data) {
-       // $this->db->prepare(INSERT INTO users(id, email, password, role, created_at, last_ip) VALUES(?, ?, ?, ?, ?, ?));
-        //$db->execute();
-        return "ok";
-        
+    function insert(string $sql, array $data)
+    {
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($data);
+        return $this->db->lastInsertId();
     }
 
-    function insert_advanced(DbObject $dbObj) {
-
+    function insert_advanced(DbObject $dbObj)
+    {
+        $tableName = $dbObj->getTableName();
+        $columns = [];
+        $values = [];
+        $data = [];
+        foreach ($dbObj as $key => $value) {
+            if ($key != 'id' && $key != 'created_at') {
+                $columns[] = $key;
+                $values[] = '?';
+                $data[] = $value;
+            }
+        }
+        $columns = implode(', ', $columns); // turn array into string, separated by ', '
+        $values = implode(', ', $values); // turn array into string, separated by ', '
+        $sql = "INSERT INTO " . $tableName . " (" . $columns . ") VALUES (" . $values . ")";
+        return $this->insert($sql, $data);
     }
 
-    function select(string $sql, array $data, string $className) {
-       // $this->db->prepare(SELECT * FROM users);
-      //  $db->execute();
+    function select(string $sql, array $data, string $className)
+    {
+        $query = $this->db->prepare($sql);
+        $query->execute($data);
+        $query->setFetchMode(PDO::FETCH_CLASS, $className);
+        return $query->fetch();
     }
 
-    function getById(string $tableName, $id, string $className) {
-       // $this->db->prepare(SELECT * FROM users WHERE id = "");
-       // $db->execute();
+    function getById(string $tableName, $id, string $className)
+    {
+        $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
+        return $this->select($sql, [$id], $className);
     }
 
-    function getById_advanced($id, string $className) {
-        return "ok";
+    function getById_advanced($id, string $className)
+    {
+        $class = new $className();
+        $tableName = $class->getTableName();
+
+        $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
+        return $this->select($sql, [$id], $className);
     }
 
-    function getBy(string $tableName, string $column, $value, string $className) {
-       // $stmt = $pdo->prepare("SELECT * FROM $tableName WHERE $column = :value");
-       // $stmt->bindValue(':value', $value);
-       // $stmt->execute();
-     //   $result = $stmt->fetchObject($className);
-     //   return $result;
-
+    function getBy(string $tableName, string $column, $value, string $className)
+    {
+        $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = ?";
+        return $this->select($sql, [$value], $className);
     }
 
-    function getBy_advanced(string $column, $value, string $className) {
+    function getBy_advanced(string $column, $value, string $className)
+    {
+        $class = new $className();
+        $tableName = $class->getTableName();
 
+        $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = '" . $value . "'";
+        return $this->select($sql, [], $className);
     }
 
-    function removeById(string $tableName, $id) {
-        //$this->db->prepare(DELETE from users WHERE id="");
+    function removeById(string $tableName, $id)
+    {
+        $sql = "DELETE FROM " . $tableName . " WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return $id;
     }
 
-    function update(string $tableName, array $data) {
-        $stmt = $pdo->prepare("UPDATE users SET email = test@test.com, role = admin WHERE id = 1");
+    function update(string $tableName, array $data)
+    {
+        $sql = "UPDATE " . $tableName . " SET ";
+        foreach ($data as $key => $value) {
+            if ($key != 'id') {
+                $sql .= $key . " = '" . $value . "', ";
+            }
+        }
+        $sql = substr($sql, 0, -2) . " WHERE id = ?"; // substr($sql, 0, -2) remove last comma
 
-        $stmt->bindValue('test@test.com', $data['email']);
-        $stmt->bindValue('admin', $data['role']);
-
-        $stmt->execute();
-
-        return $stmt;
-
+        $id = $data['id'];
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($id);
+        return $id;
     }
 
-    function update_advanced(DbObject $dbObj) {
-        
+    function update_advanced(DbObject $dbObj)
+    {
+        $tableName = $dbObj->getTableName();
+        $data = [];
+        foreach ($dbObj as $key => $value) {
+            $data[$key] = $value;
+        }
+        return $this->update($tableName, $data);
     }
-
 }
