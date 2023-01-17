@@ -6,8 +6,8 @@ $page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 
-$_SESSION['role'] = 'admin';
-requestRequired($_SESSION['role']);
+$_SESSION['role'] = 'verified';
+requestRequired($_SESSION['role'], 1000);
 ?>
 
 <body>
