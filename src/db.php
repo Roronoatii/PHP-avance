@@ -21,6 +21,6 @@ function createAccount($firstname, $lastname, $email, $password, $birthdate)
 
 	$sql = "INSERT INTO `users` (`firstname`, `lastname`, `mail`, `password`, `birthdate`, `iban`)
 	VALUES (?, ?, ?, ?, ?, ?)";
-	DbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
+	$dbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
 }
 ?>
