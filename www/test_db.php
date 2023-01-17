@@ -32,13 +32,18 @@ var_dump($idInsertedAdvanced);
 echo '</div><hr>';
 
 // TEST insert
+echo "hello";
+
 echo '<div><h2>Test insert</h2>';
 $idInserted = $dbManager->insert(
     'INSERT INTO contact_forms(fullname, phone, email, message) VALUES(?, ?, ?, ?)',
     ['Test fullname', '08020282924', 'test@test.com', 'TEST Message']
 );
+echo "hello";
 
 var_dump($idInserted);
+echo "hello";
+
 echo '</div><hr>';
 
 // TEST getById
