@@ -1,31 +1,23 @@
 <?php
 
 require_once __DIR__ . '/../src/init.php';
-// $db
-// $_SESSION
 
-$page_title = 'Home page';
+$page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 ?>
 
 <body>
 
-    <div>
-        <h1>Home page</h1>
-    </div>
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
 
-    <?php
-    $sql = "INSERT INTO contact_forms (fullname, phone, email, message) VALUES (?, ?, ?, ?)";
-    $data = [
-        'John Doe',
-        '0123456789',
-        'fsef',
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.'
-    ];
+    <section id="banner">
+        <h1>LA SUPER BANQUE</h1>
+    </section>
 
-    $db->insert($sql, $data);
-    ?>
+    <section id="intro">
+        <p>La banque qui vous accompagne</p>
+    </section>
 
     <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
 </body>
