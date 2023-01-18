@@ -44,11 +44,13 @@ class DbManager
         return $this->insert($sql, $data);
     }
 
-    function select(string $sql, array $data, string $className)
+    function select(string $sql, array $data, string $className = null)
     {
         $query = $this->db->prepare($sql);
         $query->execute($data);
-        $query->setFetchMode(PDO::FETCH_CLASS, $className);
+        if ($className != null) {
+            $query->setFetchMode(PDO::FETCH_CLASS, $className);
+        }
         return $query->fetch();
     }
 

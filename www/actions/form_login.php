@@ -6,15 +6,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['mail'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE mail = ?";
-    $stmt = $db->prepare($sql);
-    $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    // $sql = "SELECT * FROM users WHERE mail = ?";
+    // $stmt = $db->prepare($sql);
+    // $stmt->execute([$email]);
+    // $user = $stmt->fetch();
+    $query = $dbManager->select("SELECT * FROM users WHERE mail = ?", [$email]);
+    var_dump($query['password']);
+    var_dump($password);
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user'] = $user;
-        header('Location: index.php');
+    if (password_verify($password, $query['password'])) {
+        // $_SESSION['user'] = $user;
+        // header('Location: ../index.php?login=success');
+        var_dump('lol');
     } else {
-        echo "Email ou mot de passe incorrect";
+        var_dump("Email ou mot de passe incorrect");
     }
 }

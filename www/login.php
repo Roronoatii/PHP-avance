@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Contact';
@@ -12,12 +11,12 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
         <h1> Connexion</h1>
         <div>
             <label for="Adresse email"></label>
-            <input type="text" id="mail" name="mail">
+            <input type="text" id="mail" name="mail" required>
         </div>
 
         <div>
             <label for="Mot de passe"></label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" required>
         </div>
 
         <button type="submit">Connexion</button>
