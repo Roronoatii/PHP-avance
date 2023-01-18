@@ -9,18 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $dbManager->select("SELECT * FROM users WHERE mail = ?", [$email], 'User');
     $hashedPassword = $user[0]->password;
 
-<<<<<<< HEAD
     if (count($user) == 1 && password_verify($password, $hashedPassword)) {
+        $_SESSION['id'] = $user[0]->id;
         $_SESSION['role'] = $user[0]->role_id;
+        $_SESSION['firstname'] = $user[0]->firstname;
+        $_SESSION['lastname'] = $user[0]->lastname;
+        $_SESSION['mail'] = $user[0]->mail;
+        $_SESSION['birthdate'] = $user[0]->birthdate;
 
         header('Location: ../index.php?login=success');
-=======
-    if (password_verify($password, $query->password)) {
-        // $_SESSION['user'] = $user;
-        $_SESSION['userId'] = $query->id;
-        // header('Location: ../index.php?login=success');
-        var_dump('lol');
->>>>>>> 972f179bb2a941ac70e94524a38df88ebaca2348
     } else {
         var_dump("Email ou mot de passe incorrect");
     }

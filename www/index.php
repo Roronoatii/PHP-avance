@@ -4,6 +4,7 @@ require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
+checkRoleStrength(1000, "contact.php");
 ?>
 
 <body>
