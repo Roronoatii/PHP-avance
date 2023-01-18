@@ -9,6 +9,7 @@ require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/class/DbObject.php';
 require_once __DIR__ . '/class/User.php';
 require_once __DIR__ . '/class/Role.php';
+require_once __DIR__ . '/class/Deposit.php';
 
 // db manager
 require_once __DIR__ . '/class/DbManager.php';
