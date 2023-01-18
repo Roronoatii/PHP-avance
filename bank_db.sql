@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : mar. 17 jan. 2023 à 16:38
+-- Généré le : mer. 18 jan. 2023 à 21:33
 -- Version du serveur :  5.7.34
 -- Version de PHP : 8.0.8
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `currencies` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `dollar_ratio` decimal(11,7) NOT NULL
+  `dollar_ratio` decimal(11,8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -38,11 +38,11 @@ CREATE TABLE `currencies` (
 --
 
 INSERT INTO `currencies` (`id`, `name`, `dollar_ratio`) VALUES
-(1, 'EUR', '0.9200000'),
-(2, 'DOLLAR', '1.0000000'),
-(3, 'YEN', '0.0077519'),
-(4, 'BITCOIN', '0.0000471'),
-(5, 'RUBLE', '0.0145645');
+(1, 'EUR', '0.92000000'),
+(2, 'DOLLAR', '1.00000000'),
+(3, 'YEN', '0.00775190'),
+(4, 'BITCOIN', '0.00004710'),
+(5, 'RUBLE', '0.01456450');
 
 -- --------------------------------------------------------
 
@@ -54,9 +54,17 @@ CREATE TABLE `deposits` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `owner_id` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL,
-  `id_currency` int(11) NOT NULL
+  `amount` decimal(10,8) NOT NULL,
+  `id_currency` int(11) NOT NULL,
+  `submit` int(3) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `deposits`
+--
+
+INSERT INTO `deposits` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`) VALUES
+(5, '2023-01-18 21:47:29', 7, '23.00000000', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -90,8 +98,15 @@ CREATE TABLE `storage` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_currency` int(11) NOT NULL,
-  `amount` decimal(10,0) NOT NULL DEFAULT '10'
+  `amount` decimal(10,8) NOT NULL DEFAULT '10.00000000'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `storage`
+--
+
+INSERT INTO `storage` (`id`, `id_user`, `id_currency`, `amount`) VALUES
+(1, 7, 1, '10.00000000');
 
 -- --------------------------------------------------------
 
@@ -104,7 +119,7 @@ CREATE TABLE `transactions` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `sender` int(11) NOT NULL,
   `receiver` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL,
+  `amount` decimal(10,8) NOT NULL,
   `id_currency` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -125,6 +140,13 @@ CREATE TABLE `users` (
   `mail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `iban`, `birthdate`, `password`, `mail`) VALUES
+(7, 1000, 'Paul', 'Rivallin', 'FR6249493324791029218189829', '2023-01-18', '$2y$10$0ghwvA7Vbm8AJyqSe4ptoeUa0JiabGhnXaFO8dkJYfVzOVYE8VLg2', 'paul@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -135,9 +157,17 @@ CREATE TABLE `withdrawals` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `owner_id` int(11) NOT NULL,
-  `amount` decimal(10,4) NOT NULL,
-  `id_currency` int(11) NOT NULL
+  `amount` decimal(10,8) NOT NULL,
+  `id_currency` int(11) NOT NULL,
+  `submit` int(3) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `withdrawals`
+--
+
+INSERT INTO `withdrawals` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`) VALUES
+(11, '2023-01-18 21:48:15', 7, '34.00000000', 1, 2);
 
 --
 -- Index pour les tables déchargées
@@ -209,13 +239,13 @@ ALTER TABLE `currencies`
 -- AUTO_INCREMENT pour la table `deposits`
 --
 ALTER TABLE `deposits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `storage`
 --
 ALTER TABLE `storage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `transactions`
@@ -227,13 +257,13 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `withdrawals`
 --
 ALTER TABLE `withdrawals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
