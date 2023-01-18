@@ -69,7 +69,7 @@ class DbManager
         return $this->select($sql, [$id], $className);
     }
 
-    function getBy(string $tableName, string $column, $value, string $className)
+    function getBy(string $tableName, string $column, $value, string $className =null)
     {
         $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = ?";
         return $this->select($sql, [$value], $className);
