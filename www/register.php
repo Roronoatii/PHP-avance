@@ -17,7 +17,7 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
         <label for="name">Nom :</label>
         <input type="text" id="lastname" name="lastname" required>
-
+    
         <label for="email">Adresse email :</label>
         <input type="email" id="mail" name="mail" required>
 
