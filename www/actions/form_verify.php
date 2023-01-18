@@ -10,6 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = intval($user);
             var_dump($userId);
             $dbManager->update('users', ['id' => $userId, 'role_id' => 10]);
+
+
         }
+
     }
 }
