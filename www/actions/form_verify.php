@@ -28,23 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $depositId = intval($deposit);
             $dbManager->update('deposits', ['id' => $depositId, 'submit' => 2]);
 
-            // TODO ajouter de l'argent à l'utilisateur
-            $user = $dbManager->select("SELECT owner_id FROM deposits WHERE id = ?", [$depositId]);
-            $userId = $user[0]['owner_id'];
-            $currency = $dbManager->select("SELECT currency_id FROM deposits WHERE id = ?", [$depositId]);
-            $currencyId = $currency[0]['currency_id'];
-
-
-            $storage = $dbManager->select("SELECT * FROM storage WHERE id_user = ? AND id_currency = ?", [$userId, $currencyId]);
-            $storageId = $storage[0]['id'];
-            $storageAmount = floatval($storage[0]['amount']);
-
-            $deposit = $dbManager->select("SELECT amount FROM deposits WHERE id = ?", [$depositId]);
-            $depositAmount = floatval($deposit[0]['amount']);
-
-            $newStorageAmount = $storageAmount + $depositAmount;
-
-            $dbManager->update('storage', ['id' => $storageId, 'amount' => $newStorageAmount]);
+            depositMoney($depositId);
         }
 
     }
@@ -57,23 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $withdrawalId = intval($withdrawal);
             $dbManager->update('withdrawals', ['id' => $withdrawalId, 'submit' => 2]);
 
-            // TODO retirer  de l'argent à l'utilisateur
-            $user = $dbManager->select("SELECT owner_id FROM withdrawals WHERE id = ?", [$withdrawalId]);
-            $userId = $user[0]['owner_id'];
-            $currency = $dbManager->select("SELECT id_currency FROM withdrawals WHERE id = ?", [$withdrawalId]);
-            $currencyId = $currency[0]['id_currency'];
-
-            $storage = $dbManager->select("SELECT * FROM storage WHERE id_user = ? AND id_currency = ?", [$userId, $currencyId]);
-            $storageId = $storage[0]['id'];
-            $storageAmount = floatval($storage[0]['amount']);
-
-            $withdrawal = $dbManager->select("SELECT amount FROM withdrawals WHERE id = ?", [$withdrawalId]);
-            $withdrawalAmount = floatval($withdrawal[0]['amount']);
-
-            $newStorageAmount = $storageAmount - $withdrawalAmount;
-
-            $dbManager->update('storage', ['id' => $storageId, 'amount' => $newStorageAmount]);
-
+            withdrawMoney($withdrawalId);
         }
 
     }
