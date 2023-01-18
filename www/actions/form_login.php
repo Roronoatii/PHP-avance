@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (password_verify($password, $query->password)) {
         // $_SESSION['user'] = $user;
+        $_SESSION['userId'] = $query->id;
         // header('Location: ../index.php?login=success');
         var_dump('lol');
     } else {
