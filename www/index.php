@@ -5,6 +5,8 @@ require_once __DIR__ . '/../src/init.php';
 $page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
+
+$_SESSION['role'] = 'verified';
 ?>
 
 <body>
