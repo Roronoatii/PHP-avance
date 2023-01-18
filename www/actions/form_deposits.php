@@ -7,8 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currency = $_POST['currency'];
 
     $currency = $dbManager->getBy('currencies', 'name', $currency);
-    $currencyId = $currency['id'];
-    $insert = $dbManager->insert("INSERT INTO `deposits`(`owner_id`, `amount`, `id_currency`) VALUES(?, ?, ?)", [$_SESSION['userId'], $amount, $currencyId]);
+    $currencyId = $currency[0]['id'];
+    $insert = $dbManager->insert("INSERT INTO `deposits`(`owner_id`, `amount`, `id_currency`) VALUES(?, ?, ?)", [$_SESSION['id'], $amount, $currencyId]);
 
-
+    
 }

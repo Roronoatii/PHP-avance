@@ -26,8 +26,8 @@ checkRoleStrength(200);
             }
             ?>
 
-            <input type="submit" name="verify-submit" value="Valider">
-            <input type="submit" name="refuse-submit" value="Refuser">
+            <input type="submit" name="accept-account-submit" value="Valider">
+            <input type="submit" name="refuse-account-submit" value="Refuser">
         </form>
     </section>
     <section id="intro">
@@ -47,8 +47,29 @@ checkRoleStrength(200);
             }
             ?>
 
-            <input type="submit" name="verify-submit" value="Valider">
-            <input type="submit" name="refuse-submit" value="Refuser">
+            <input type="submit" name="accept-deposit-submit" value="Valider">
+            <input type="submit" name="refuse-deposit-submit" value="Refuser">
+        </form>
+    </section>
+    <section id="intro">
+        <form action="actions/form_verify.php" method="POST">
+            <?php
+            $result = $dbManager->select("SELECT * FROM `withdrawals` WHERE `submit` = '1'", [], 'Withdrawal');
+            foreach ($result as $withdrawal) {
+                $currencyId = $dbManager->getById('currencies', $withdrawal->id_currency, 'Withdrawal');
+                $currency = $currencyId[0]->name;
+
+                $userId = $dbManager->getById('users', $withdrawal->owner_id, 'User');
+                $userFirstname = $userId[0]->firstname;
+                $userLastname = $userId[0]->lastname;
+
+                echo '<input type="checkbox" name="withdrawal[]" value="' . $withdrawal->id . '">';
+                echo $withdrawal->date . ' ' . $withdrawal->amount . ' ' . $currency . ' ' . $userFirstname . ' ' . $userLastname . '<br>';
+            }
+            ?>
+
+            <input type="submit" name="accept-withdrawal-submit" value="Valider">
+            <input type="submit" name="refuse-withdrawal-submit" value="Refuser">
         </form>
     </section>
 
