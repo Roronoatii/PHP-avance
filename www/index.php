@@ -7,7 +7,6 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 
 $_SESSION['role'] = 'verified';
-requestRequired($_SESSION['role'], 1000);
 ?>
 
 <body>
