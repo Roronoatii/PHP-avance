@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: ../manager_verify.php');
 
     if (isset($_POST['accept-withdrawal-submit'])) {
-        $deposits = $_POST['withdrawal'];
+        $withdrawals = $_POST['withdrawal'];
 
         foreach ($withdrawals as $withdrawal) {
 

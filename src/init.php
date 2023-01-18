@@ -5,11 +5,10 @@ session_start();
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/session.php';
 
-// class
-require_once __DIR__ . '/class/DbObject.php';
-require_once __DIR__ . '/class/User.php';
-require_once __DIR__ . '/class/Role.php';
-require_once __DIR__ . '/class/Deposit.php';
+// classes
+foreach(glob(__DIR__ . '/class/*.php') as $filename) {
+    require_once $filename;
+}
 
 // db manager
 require_once __DIR__ . '/class/DbManager.php';
