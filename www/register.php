@@ -13,10 +13,10 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
     <form method="POST" action="actions/form_register.php">
         <label for="prenom">Prénom :</label>
-        <input type="text" id="lastname" name="lastname" required>
+        <input type="text" id="firstname" name="firstname" required>
 
         <label for="name">Nom :</label>
-        <input type="text" id="firstname" name="firstname" required>
+        <input type="text" id="lastname" name="lastname" required>
 
         <label for="email">Adresse email :</label>
         <input type="email" id="mail" name="mail" required>
