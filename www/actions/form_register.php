@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($query != null) {
             var_dump("Cette adresse email est déjà utilisée, veuillez en saisir une autre");
         } else {
-            $password = password_hash($password, PASSWORD_DEFAULT);
 
             createAccount($firstname, $lastname, $email, $password, $birthdate);
 

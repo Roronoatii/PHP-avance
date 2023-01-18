@@ -15,11 +15,9 @@ function createAccount($firstname, $lastname, $email, $password, $birthdate)
 {
 	global $dbManager;
 
-	$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
 	$iban = getRandomIban();
 
 	$sql = "INSERT INTO `users` (`firstname`, `lastname`, `mail`, `password`, `birthdate`, `iban`)
 	VALUES (?, ?, ?, ?, ?, ?)";
-	$dbManager->insert($sql, [$firstname, $lastname, $email, $hashedPassword, $birthdate, $iban]);
+	$dbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
 }

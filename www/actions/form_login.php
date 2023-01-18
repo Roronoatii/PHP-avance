@@ -10,11 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // $stmt = $db->prepare($sql);
     // $stmt->execute([$email]);
     // $user = $stmt->fetch();
-    $query = $dbManager->select("SELECT * FROM users WHERE mail = ?", [$email]);
-    var_dump($query['password']);
-    var_dump($password);
+    $query = $dbManager->select("SELECT * FROM users WHERE mail = ?", [$email], 'User');
+    // echo $hashedPassword;
+    var_dump($query->password);
+    var_dump($hashedPassword);
 
-    if (password_verify($password, $query['password'])) {
+    if ($query && $hashedPassword == $query->password) {
         // $_SESSION['user'] = $user;
         // header('Location: ../index.php?login=success');
         var_dump('lol');
