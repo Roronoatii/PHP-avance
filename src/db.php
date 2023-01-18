@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/class/User.php';
+require_once __DIR__ . '/class/Role.php';
 
 try {
 	$dsn = 'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['name'] . ';port=' . $config['db']['port'] . '';
@@ -23,14 +25,14 @@ function createAccount($firstname, $lastname, $email, $password, $birthdate)
 	VALUES (?, ?, ?, ?, ?, ?)";
 	$dbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
 }
-function requestRequired($roles, $requiredLvl){
+function checkRoleStrength($role, $requiredLvl, $redirection = 'index.php'){
 	global $dbManager;
 
-		$role = $dbManager->getBy('roles', 'name', $roles, 'User'); //name is not id
+	$userRole = $dbManager->getBy('roles', 'name', $role, 'Role');
+	$userRoleStrength = $userRole->id;	
 
-	if($role['id'] < $requiredLvl) {
-		// header('contact.php');
-		echo "act III";
+	if ($userRoleStrength < $requiredLvl) {
+		header('Location: /' . $redirection . '?error=not_allowed');
 	}
 }
 ?>
