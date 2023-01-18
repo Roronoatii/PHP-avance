@@ -75,7 +75,7 @@ checkRoleStrength(200);
     <section>
     <form method="POST" action="actions/form_deposits_manager.php">
         <label for="value">Dépot pour :</label>
-        <input type="text" id="IBAN" name="iban" required>
+        <input type="text" id="iban" name="iban" required>
         <label for="value">Montant :</label>
         <input type="text" id="amount" name="amount" required>
         <select name="currency" id="currency" required>
