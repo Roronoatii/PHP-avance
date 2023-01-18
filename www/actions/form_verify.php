@@ -45,5 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
     }
-    header('Location: ../manager_verify.php');
 }
+
+header('Location: ../manager_verify.php');
+exit;

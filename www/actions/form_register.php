@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             createAccount($firstname, $lastname, $email, $password, $birthdate);
 
             header('Location: ../login.php?register=success');
+            exit;
         }
     }
 }

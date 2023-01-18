@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['logged'] = true;
 
         header('Location: ../index.php?login=success');
+        exit;
     } else {
         var_dump("Email ou mot de passe incorrect");
     }

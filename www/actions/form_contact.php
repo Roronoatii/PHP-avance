@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../src/init.php';
 
 $verifys = ['fullname', 'phone', 'email'];
 
-foreach($verifys as $verify) {
+foreach ($verifys as $verify) {
     if (!isset($_POST[$verify])) {
         set_error_die('Empty ' . $verify, '/contact.php');
     }
@@ -27,3 +27,4 @@ $stmh->execute([
 
 // ajoute response header pour rediriger utilisateur/navigateur
 header('Location: /contact.php');
+exit;
