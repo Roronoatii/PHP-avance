@@ -1,19 +1,27 @@
 <?php
 
 require_once __DIR__ . '/../src/init.php';
-// $db
-// $_SESSION
 
-$page_title = 'Home page';
+$page_title = 'Accueil';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
+
+$_SESSION['role'] = 'verified';
 ?>
+
 <body>
 
-<div>
-    <h1>Home page</h1>
-</div>
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
 
-<?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
+    <section id="banner">
+        <h1>LA SUPER BANQUE</h1>
+    </section>
+
+    <section id="intro">
+        <p>La banque qui vous accompagne</p>
+    </section>
+
+    <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
 </body>
+
 </html>
