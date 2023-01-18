@@ -26,8 +26,8 @@ checkRoleStrength(200);
             }
             ?>
 
-            <input type="submit" name="verify-submit" value="Valider">
-            <input type="submit" name="refuse-submit" value="Refuser">
+            <input type="submit" name="accept-account-submit" value="Valider">
+            <input type="submit" name="refuse-account-submit" value="Refuser">
         </form>
     </section>
     <section id="intro">
@@ -47,8 +47,8 @@ checkRoleStrength(200);
             }
             ?>
 
-            <input type="submit" name="verify-submit" value="Valider">
-            <input type="submit" name="refuse-submit" value="Refuser">
+            <input type="submit" name="accept-deposit-submit" value="Valider">
+            <input type="submit" name="refuse-deposit-submit" value="Refuser">
         </form>
     </section>
 
