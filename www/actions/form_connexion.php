@@ -14,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if($user && password_verify($password, $user['password'])){
         $_SESSION['user'] = $user;
         echo "Vous êtes connectés";
-        header('Location: ../index.php');
+        //header('Location: ../index.php');
     }else{
         echo "Email ou mot de passe incorrect";
     }

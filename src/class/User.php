@@ -6,7 +6,6 @@ class User extends DbObject
     const TABLE_NAME = 'users';
 
     public $id;
-
     public $role_id;
     public $firstname;
 
