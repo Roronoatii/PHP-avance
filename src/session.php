@@ -3,11 +3,7 @@ require_once __DIR__ . '/init.php';
 
 function checkRoleStrength($requiredStrength, $redirection = 'index.php')
 {
-    global $dbManager;
-
-    $userRoleName = $_SESSION['role'];
-    $userRole = $dbManager->getBy('roles', 'name', $userRoleName, 'Role');
-    $userRoleStrength = $userRole->id;
+    $userRoleStrength = $_SESSION['role'];
 
     if ($userRoleStrength < $requiredStrength) {
         header('Location: /' . $redirection . '?error=not_allowed');
