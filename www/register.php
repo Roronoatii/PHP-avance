@@ -29,3 +29,6 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
         <input type="submit" name="register-submit" value="S'inscrire">
     </form>
+    <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
+</body>
+</html>

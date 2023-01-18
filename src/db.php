@@ -14,7 +14,6 @@ try {
 function createAccount($firstname, $lastname, $email, $password, $birthdate)
 {
 	global $dbManager;
-
 	$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
 	$iban = getRandomIban();

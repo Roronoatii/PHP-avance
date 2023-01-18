@@ -32,7 +32,7 @@ class DbManager
         $values = [];
         $data = [];
         foreach ($dbObj as $key => $value) {
-            if ($key != 'id' && $key != 'created_at') {
+            if ($key != 'id') {
                 $columns[] = $key;
                 $values[] = '?';
                 $data[] = $value;
@@ -51,7 +51,7 @@ class DbManager
         if ($className != null) {
             $query->setFetchMode(PDO::FETCH_CLASS, $className);
         }
-        return $query->fetch();
+        return $query->fetchAll();
     }
 
     function getById(string $tableName, $id, string $className)
@@ -69,7 +69,7 @@ class DbManager
         return $this->select($sql, [$id], $className);
     }
 
-    function getBy(string $tableName, string $column, $value, string $className)
+    function getBy(string $tableName, string $column, $value, string $className =null)
     {
         $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = ?";
         return $this->select($sql, [$value], $className);
@@ -100,11 +100,12 @@ class DbManager
                 $sql .= $key . " = '" . $value . "', ";
             }
         }
-        $sql = substr($sql, 0, -2) . " WHERE id = ?"; // substr($sql, 0, -2) remove last comma
 
         $id = $data['id'];
+        $sql = substr($sql, 0, -2) . " WHERE id = " . $id;
+        // substr($sql, 0, -2) remove last comma
         $stmt = $this->db->prepare($sql);
-        $stmt->execute($id);
+        $stmt->execute();
         return $id;
     }
 
