@@ -1,26 +1,13 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-function checkRequiredRole($requiredStrength, $redirection = 'index.php')
+function checkRoleStrength($requiredStrength, $redirection = 'index.php')
 {
-    global $dbManager;
+    $userRoleStrength = $_SESSION['role'];
 
-    $userRole = $_SESSION['role'];
-
-    // $dbManager->select('SELECT id FROM roles WHERE name = ?', [$userRole], 'Role');
-    // $sql = "SELECT id FROM roles WHERE name = 'verified'";
-    // $query = $dbManager->db->prepare($sql);
-    // $query->execute([$userRole]);
-    // $result = $query->fetch();
-    // var_dump($result);
-
-    // $roleStrength = intval($result['id']);
-    // echo $roleStrength;
-
-    // if ($roleStrength < $requiredStrength) {
-    //     header('Location: /' . $redirection . '?error=not_allowed');
-    //     exit;
-    // }
+    if ($userRoleStrength < $requiredStrength) {
+        header('Location: /' . $redirection . '?error=not_allowed');
+    }
 }
 
 function checkConnected($hasToBeConnected = true, $redirection = 'login.php')
@@ -32,6 +19,8 @@ function checkConnected($hasToBeConnected = true, $redirection = 'login.php')
         $header = 'Location: /' . $redirection;
         if (!$isConnected) {
             $header .= '?error=not_connected';
+        } else {
+            $header .= '?error=already_connected';
         }
         header($header);
         exit;

@@ -1,6 +1,7 @@
 <?php
-
+require_once __DIR__ . '/init.php';
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/utils/customs.php';
 
 try {
 	$dsn = 'mysql:host=' . $config['db']['host'] . ';dbname=' . $config['db']['name'] . ';port=' . $config['db']['port'] . '';
@@ -13,25 +14,11 @@ try {
 function createAccount($firstname, $lastname, $email, $password, $birthdate)
 {
 	global $dbManager;
+	$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-	$iban = "FR";
-	for ($i = 0; $i < 5; $i++) {
-		$iban .= strval(rand(10000, 99999));
-	}
+	$iban = getRandomIban();
 
 	$sql = "INSERT INTO `users` (`firstname`, `lastname`, `mail`, `password`, `birthdate`, `iban`)
 	VALUES (?, ?, ?, ?, ?, ?)";
-	$dbManager->insert($sql, [$firstname, $lastname, $email, $password, $birthdate, $iban]);
+	$dbManager->insert($sql, [$firstname, $lastname, $email, $hashedPassword, $birthdate, $iban]);
 }
-function requestRequired($role, $requiredLvl)
-{
-	global $dbManager;
-
-	$role = $dbManager->getBy('roles', 'name', $role, 'User');
-
-	if ($role['id'] < $requiredLvl) {
-		// header('contact.php');
-		echo "act III";
-	}
-}
-?>
