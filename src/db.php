@@ -63,6 +63,27 @@ function sendMoney($iban, $amount, $currency, $exchange = false)
 	updateMoney($userId, $currencyId, $amount);
 }
 
+function convertMoney($originCurrency, $targetCurrency, $amount)
+{
+	global $dbManager;
+
+	$originCurrency = $dbManager->getBy('currencies', 'name', $originCurrency);
+	$originCurrencyId = $originCurrency[0]['id'];
+	$originCurrencyRatio = $originCurrency[0]['dollar_ratio'];
+
+	$targetCurrency = $dbManager->getBy('currencies', 'name', $targetCurrency);
+	$targetCurrencyId = $targetCurrency[0]['id'];
+	$targetCurrencyRatio = $targetCurrency[0]['dollar_ratio'];
+
+	$newAmount = $amount * $originCurrencyRatio / $targetCurrencyRatio;
+
+	createTransaction($_SESSION['id'], $originCurrencyId, -$amount, $_SESSION['id'], 1);
+	updateMoney($_SESSION['id'], $originCurrencyId, -$amount);
+
+	createTransaction($_SESSION['id'], $targetCurrencyId, $newAmount, $_SESSION['id'], 1);
+	updateMoney($_SESSION['id'], $targetCurrencyId, $newAmount);
+}
+
 function updateMoney($userId, $currencyId, $amount)
 {
 	global $dbManager;

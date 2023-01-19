@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $currency = $dbManager->getBy('currencies', 'name', $currency);
     $currencyId = $currency[0]['id'];
-    var_dump($currencyId);
     createTransaction($_SESSION['id'], $currencyId, $amount, $_SESSION['id']);
 }
 
