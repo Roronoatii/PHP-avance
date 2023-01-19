@@ -13,7 +13,7 @@ checkRoleStrength(10);
 
     <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
 
-    <form method="POST" action="actions/form_deposits.php">
+    <form method="POST" action="actions/form_deposit.php">
         <label for="value">Depot Montant :</label>
         <input type="text" id="amount" name="amount" required>
         <select name="currency" id="currency" required>

@@ -16,6 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             createAccount($firstname, $lastname, $email, $password, $birthdate);
 
+            $user = $dbManager->select("SELECT * FROM users WHERE mail = ?", [$email], 'User');
+            $userId = $user[0]->id;
+
+            // create a storage for the user for each currency
+            for ($currencyId = 1; $currencyId <= 5; $currencyId++) {
+                $sql = "INSERT INTO `storage` (`id_user`, `id_currency`) VALUES (?, ?)";
+                $dbManager->insert($sql, [$userId, $currencyId]);
+            }
+
             header('Location: ../login.php?register=success');
             exit;
         }

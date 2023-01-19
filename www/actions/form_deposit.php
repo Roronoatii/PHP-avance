@@ -8,8 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $currency = $dbManager->getBy('currencies', 'name', $currency);
     $currencyId = $currency[0]['id'];
-    createDeposit($_SESSION['id'], $currencyId, $amount, $_SESSION['id']);
+    var_dump($currencyId);
+    createTransaction($_SESSION['id'], $currencyId, $amount, $_SESSION['id']);
 }
 
-header('Location: ../deposits.php');
+header('Location: ../deposit.php');
 exit;

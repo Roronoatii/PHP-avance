@@ -10,12 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // update the role of the users
             $userId = intval($user);
             $dbManager->update('users', ['id' => $userId, 'role_id' => 10]);
-
-            // create a storage for the user for each currency
-            for ($currencyId = 1; $currencyId <= 5; $currencyId++) {
-                $sql = "INSERT INTO `storage` (`id_user`, `id_currency`) VALUES (?, ?)";
-                $dbManager->insert($sql, [$userId, $currencyId]);
-            }
         }
 
     }
@@ -26,9 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($deposits as $deposit) {
 
             $depositId = intval($deposit);
-            $dbManager->update('deposits', ['id' => $depositId, 'submit' => 2]);
+            updateTransaction($depositId, 1);
 
-            acceptDeposit($depositId);
+            acceptTransaction($depositId);
         }
 
     }
@@ -39,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($withdrawals as $withdrawal) {
 
             $withdrawalId = intval($withdrawal);
-            $dbManager->update('withdrawals', ['id' => $withdrawalId, 'submit' => 2]);
+            updateTransaction($withdrawalId, 1);
 
-            acceptWithdrawal($withdrawalId);
+            acceptTransaction($withdrawalId);
         }
 
     }

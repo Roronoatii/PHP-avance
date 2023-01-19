@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $currency = $dbManager->getBy('currencies', 'name', $currency);
     $currencyId = $currency[0]['id'];
-    createWithdrawal($_SESSION['id'], $currencyId, $amount, $_SESSION['id']);
+    createTransaction($_SESSION['id'], $currencyId, -$amount, $_SESSION['id']);
 }
 
-header('Location: ../withdrawals.php');
+header('Location: ../withdrawal.php');
 exit;
