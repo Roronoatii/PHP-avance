@@ -23,15 +23,21 @@ function createAccount($firstname, $lastname, $email, $password, $birthdate)
 	$dbManager->insert($sql, [$firstname, $lastname, $email, $hashedPassword, $birthdate, $iban]);
 }
 
-function depositMoney($depositId)
+function createDeposit($userId, $currencyId, $amount, $authorId, $status = 1) {
+	global $dbManager;
+
+    $dbManager->insert("INSERT INTO `deposits`(`owner_id`, `amount`, `id_currency`, `id_author`, `submit`) VALUES(?, ?, ?, ?, ?)", [$userId, $amount, $currencyId, $authorId, $status]);
+}
+
+function acceptDeposit($depositId)
 {
 	global $dbManager;
 
 	$user = $dbManager->select("SELECT owner_id FROM deposits WHERE id = ?", [$depositId]);
 	$userId = $user[0]['owner_id'];
 
-	$currency = $dbManager->select("SELECT currency_id FROM deposits WHERE id = ?", [$depositId]);
-	$currencyId = $currency[0]['currency_id'];
+	$currency = $dbManager->select("SELECT id_currency FROM deposits WHERE id = ?", [$depositId]);
+	$currencyId = $currency[0]['id_currency'];
 
 	$deposit = $dbManager->select("SELECT amount FROM deposits WHERE id = ?", [$depositId]);
 	$depositAmount = floatval($deposit[0]['amount']);
@@ -52,7 +58,13 @@ function addMoney($userId, $currencyId, $amount)
 	$dbManager->update('storage', ['id' => $storageId, 'amount' => $newStorageAmount]);
 }
 
-function withdrawMoney($withdrawalId)
+function createWithdrawal($userId, $currencyId, $amount, $authorId, $status = 1) {
+	global $dbManager;
+
+    $dbManager->insert("INSERT INTO `withdrawals`(`owner_id`, `amount`, `id_currency`, `id_author`, `submit`) VALUES(?, ?, ?, ?, ?)", [$userId, $amount, $currencyId, $authorId, $status]);
+}
+
+function acceptWithdrawal($withdrawalId)
 {
 	global $dbManager;
 

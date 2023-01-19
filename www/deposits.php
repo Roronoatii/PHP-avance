@@ -1,4 +1,17 @@
+<?php
+
+require_once __DIR__ . '/../src/init.php';
+
+$page_title = 'Accueil';
+require_once __DIR__ . '/../src/templates/partials/html_head.php';
+
+checkConnected();
+checkRoleStrength(10);
+?>
+
 <body>
+
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
 
     <form method="POST" action="actions/form_deposits.php">
         <label for="value">Depot Montant :</label>

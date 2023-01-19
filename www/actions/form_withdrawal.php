@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $currency = $dbManager->getBy('currencies', 'name', $currency);
     $currencyId = $currency[0]['id'];
-    $insert = $dbManager->insert("INSERT INTO `withdrawals`(`owner_id`, `amount`, `id_currency`) VALUES(?, ?, ?)", [$_SESSION['id'], $amount, $currencyId]);
+    createWithdrawal($_SESSION['id'], $currencyId, $amount, $_SESSION['id']);
 }
 
 header('Location: ../withdrawals.php');

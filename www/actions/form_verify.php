@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $depositId = intval($deposit);
             $dbManager->update('deposits', ['id' => $depositId, 'submit' => 2]);
 
-            depositMoney($depositId);
+            acceptDeposit($depositId);
         }
 
     }
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $withdrawalId = intval($withdrawal);
             $dbManager->update('withdrawals', ['id' => $withdrawalId, 'submit' => 2]);
 
-            withdrawMoney($withdrawalId);
+            acceptWithdrawal($withdrawalId);
         }
 
     }
