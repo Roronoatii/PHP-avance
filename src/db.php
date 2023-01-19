@@ -43,6 +43,7 @@ function acceptDeposit($depositId)
 	$depositAmount = floatval($deposit[0]['amount']);
 
 	addMoney($userId, $currencyId, $depositAmount);
+	createTransaction($userId, $userId, $currencyId, $depositAmount, $userId);
 }
 
 function addMoney($userId, $currencyId, $amount)
@@ -78,6 +79,7 @@ function acceptWithdrawal($withdrawalId)
 	$withdrawalAmount = floatval($withdrawal[0]['amount']);
 
 	removeMoney($userId, $currencyId, $withdrawalAmount);
+	createTransaction($userId, $userId, $currencyId, -$withdrawalAmount, $userId);
 }
 
 function removeMoney($userId, $currencyId, $amount)
@@ -93,11 +95,15 @@ function removeMoney($userId, $currencyId, $amount)
 	$dbManager->update('storage', ['id' => $storageId, 'amount' => $newStorageAmount]);
 }
 
-function getStorageId($userId, $currencyId)
-{
+function getStorage($userId, $currencyId) {
 	global $dbManager;
 
 	$storage = $dbManager->select("SELECT * FROM storage WHERE id_user = ? AND id_currency = ?", [$userId, $currencyId]);
-	$storageId = $storage[0]['id'];
-	return $storageId;
+	return $storage[0];
+}
+
+function createTransaction($senderId, $receiverId, $currencyId, $amount, $authorId) {
+	global $dbManager;
+
+	$dbManager->insert("INSERT INTO `transactions`(`id_sender`, `id_receiver`, `id_currency`, `amount`, `id_author`) VALUES(?, ?, ?, ?, ?)", [$senderId, $receiverId, $currencyId, $amount, $authorId]);
 }

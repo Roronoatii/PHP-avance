@@ -13,4 +13,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currencyId = $currency[0]['id'];
     createWithdrawal($userId, $currencyId, $amount, $_SESSION['id'], 2);
     removeMoney($userId, $currencyId, $amount);
+    createTransaction($userId, $userId, $currencyId, -$amount, $_SESSION['id']);
 }

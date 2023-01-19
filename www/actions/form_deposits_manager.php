@@ -13,4 +13,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currencyId = $currency[0]['id'];
     createDeposit($userId, $currencyId, $amount, $_SESSION['id'], 2);
     addMoney($userId, $currencyId, $amount);
+    createTransaction($userId, $userId, $currencyId, $amount, $_SESSION['id']);
 }
