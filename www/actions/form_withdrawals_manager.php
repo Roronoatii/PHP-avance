@@ -11,6 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $iban[0]['id'];
     $currency = $dbManager->getBy('currencies', 'name', $currency);
     $currencyId = $currency[0]['id'];
-    addMoney($userId, $currencyId, $amount);
+    removeMoney($userId, $currencyId, $amount);
     
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : mer. 18 jan. 2023 à 21:33
+-- Généré le : jeu. 19 jan. 2023 à 08:50
 -- Version du serveur :  5.7.34
 -- Version de PHP : 8.0.8
 
@@ -56,15 +56,9 @@ CREATE TABLE `deposits` (
   `owner_id` int(11) NOT NULL,
   `amount` decimal(10,8) NOT NULL,
   `id_currency` int(11) NOT NULL,
-  `submit` int(3) NOT NULL DEFAULT '1'
+  `submit` int(3) NOT NULL DEFAULT '1',
+  `id_author` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `deposits`
---
-
-INSERT INTO `deposits` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`) VALUES
-(5, '2023-01-18 21:47:29', 7, '23.00000000', 5, 2);
 
 -- --------------------------------------------------------
 
@@ -101,13 +95,6 @@ CREATE TABLE `storage` (
   `amount` decimal(10,8) NOT NULL DEFAULT '10.00000000'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `storage`
---
-
-INSERT INTO `storage` (`id`, `id_user`, `id_currency`, `amount`) VALUES
-(1, 7, 1, '10.00000000');
-
 -- --------------------------------------------------------
 
 --
@@ -140,13 +127,6 @@ CREATE TABLE `users` (
   `mail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `users`
---
-
-INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `iban`, `birthdate`, `password`, `mail`) VALUES
-(7, 1000, 'Paul', 'Rivallin', 'FR6249493324791029218189829', '2023-01-18', '$2y$10$0ghwvA7Vbm8AJyqSe4ptoeUa0JiabGhnXaFO8dkJYfVzOVYE8VLg2', 'paul@gmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -159,15 +139,9 @@ CREATE TABLE `withdrawals` (
   `owner_id` int(11) NOT NULL,
   `amount` decimal(10,8) NOT NULL,
   `id_currency` int(11) NOT NULL,
-  `submit` int(3) NOT NULL DEFAULT '1'
+  `submit` int(3) NOT NULL DEFAULT '1',
+  `id_author` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `withdrawals`
---
-
-INSERT INTO `withdrawals` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`) VALUES
-(11, '2023-01-18 21:48:15', 7, '34.00000000', 1, 2);
 
 --
 -- Index pour les tables déchargées
@@ -185,7 +159,8 @@ ALTER TABLE `currencies`
 ALTER TABLE `deposits`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owner_id` (`owner_id`),
-  ADD KEY `id_currency` (`id_currency`);
+  ADD KEY `id_currency` (`id_currency`),
+  ADD KEY `id_author` (`id_author`);
 
 --
 -- Index pour la table `roles`
@@ -223,7 +198,8 @@ ALTER TABLE `users`
 ALTER TABLE `withdrawals`
   ADD PRIMARY KEY (`id`),
   ADD KEY `owner_id` (`owner_id`),
-  ADD KEY `id_currency` (`id_currency`);
+  ADD KEY `id_currency` (`id_currency`),
+  ADD KEY `id_author` (`id_author`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -245,7 +221,7 @@ ALTER TABLE `deposits`
 -- AUTO_INCREMENT pour la table `storage`
 --
 ALTER TABLE `storage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `transactions`
@@ -274,7 +250,8 @@ ALTER TABLE `withdrawals`
 --
 ALTER TABLE `deposits`
   ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `deposits_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`);
+  ADD CONSTRAINT `deposits_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
+  ADD CONSTRAINT `deposits_ibfk_3` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 
 --
 -- Contraintes pour la table `storage`
@@ -302,7 +279,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `withdrawals`
   ADD CONSTRAINT `withdrawals_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `withdrawals_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`);
+  ADD CONSTRAINT `withdrawals_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
+  ADD CONSTRAINT `withdrawals_ibfk_3` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
