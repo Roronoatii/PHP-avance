@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : jeu. 19 jan. 2023 à 12:58
--- Version du serveur :  5.7.34
--- Version de PHP : 8.0.8
+-- Host: localhost:3306
+-- Generation Time: Jan 20, 2023 at 12:21 AM
+-- Server version: 5.7.24
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `bank_db`
+-- Database: `bank_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `currencies`
+-- Table structure for table `currencies`
 --
 
 CREATE TABLE `currencies` (
@@ -34,7 +34,7 @@ CREATE TABLE `currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `currencies`
+-- Dumping data for table `currencies`
 --
 
 INSERT INTO `currencies` (`id`, `name`, `dollar_ratio`) VALUES
@@ -47,35 +47,7 @@ INSERT INTO `currencies` (`id`, `name`, `dollar_ratio`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `deposits`
---
-
-CREATE TABLE `deposits` (
-  `id` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `owner_id` int(11) NOT NULL,
-  `amount` decimal(64,8) NOT NULL,
-  `id_currency` int(11) NOT NULL,
-  `submit` int(3) NOT NULL DEFAULT '1',
-  `id_author` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `deposits`
---
-
-INSERT INTO `deposits` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`, `id_author`) VALUES
-(8, '2023-01-19 10:10:43', 11, '23.00000000', 2, 2, 11),
-(9, '2023-01-19 10:21:03', 11, '1000.00000000', 4, 2, 10),
-(10, '2023-01-19 10:28:04', 11, '63.00000000', 5, 2, 10),
-(11, '2023-01-19 11:23:33', 11, '1000.00000000', 1, 2, 10),
-(12, '2023-01-19 11:24:30', 11, '1000.00000000', 1, 2, 10),
-(13, '2023-01-19 11:27:59', 11, '63.00000000', 2, 2, 11);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -84,7 +56,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`) VALUES
@@ -97,7 +69,7 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `storage`
+-- Table structure for table `storage`
 --
 
 CREATE TABLE `storage` (
@@ -108,74 +80,56 @@ CREATE TABLE `storage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `storage`
+-- Dumping data for table `storage`
 --
 
 INSERT INTO `storage` (`id`, `id_user`, `id_currency`, `amount`) VALUES
-(4, 11, 1, '19232.64814815'),
-(5, 11, 2, '0.00000000'),
-(6, 11, 3, '10.00000000'),
-(7, 11, 4, '7.00000000'),
-(8, 11, 5, '10.00000000'),
-(9, 12, 1, '10.00000000'),
-(10, 12, 2, '10.00000000'),
-(11, 12, 3, '10.00000000'),
-(12, 12, 4, '10.00000000'),
-(13, 12, 5, '10.00000000');
+(14, 13, 1, '38432.77777778'),
+(15, 13, 2, '20753.30000000'),
+(16, 13, 3, '8029641.44519410'),
+(17, 13, 4, '89.00000000'),
+(18, 13, 5, '1424590.31514990'),
+(19, 14, 1, '10.00000000'),
+(20, 14, 2, '10.00000000'),
+(21, 14, 3, '1003.00000000'),
+(22, 14, 4, '12.00000000'),
+(23, 14, 5, '10.00000000');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `transactions`
+-- Table structure for table `transactions`
 --
 
 CREATE TABLE `transactions` (
   `id` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `id_sender` int(11) NOT NULL,
-  `id_receiver` int(11) NOT NULL,
-  `amount` decimal(64,8) NOT NULL,
+  `id_user` int(11) NOT NULL,
   `id_currency` int(11) NOT NULL,
-  `id_author` int(11) NOT NULL
+  `amount` decimal(64,8) NOT NULL,
+  `id_author` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `id_exchange` int(11) DEFAULT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `transactions`
+-- Dumping data for table `transactions`
 --
 
-INSERT INTO `transactions` (`id`, `date`, `id_sender`, `id_receiver`, `amount`, `id_currency`, `id_author`) VALUES
-(1, '2023-01-19 11:23:33', 11, 11, '1000.00000000', 1, 10),
-(2, '2023-01-19 11:24:30', 11, 11, '1000.00000000', 1, 10),
-(3, '2023-01-19 11:24:55', 11, 11, '1000.00000000', 1, 10),
-(4, '2023-01-19 11:26:15', 11, 11, '-1000.00000000', 1, 10),
-(5, '2023-01-19 11:28:19', 11, 11, '63.00000000', 2, 11),
-(6, '2023-01-19 11:39:30', 12, 11, '34.00000000', 5, 10),
-(7, '2023-01-19 11:39:30', 12, 11, '-34.00000000', 5, 10),
-(8, '2023-01-19 11:44:09', 11, 12, '1000.00000000', 4, 11),
-(9, '2023-01-19 11:44:09', 11, 12, '-1000.00000000', 4, 11),
-(10, '2023-01-19 12:01:27', 11, 11, '0.00607593', 3, 11),
-(11, '2023-01-19 12:01:27', 11, 11, '-1.00000000', 4, 11),
-(12, '2023-01-19 12:03:27', 11, 11, '1.06449243', 5, 11),
-(13, '2023-01-19 12:03:27', 11, 11, '-2.00000000', 3, 11),
-(14, '2023-01-19 12:15:41', 11, 11, '84.54733678', 3, 11),
-(15, '2023-01-19 12:15:41', 11, 11, '-45.00000000', 5, 11),
-(16, '2023-01-19 12:17:49', 11, 11, '0.93941485', 3, 11),
-(17, '2023-01-19 12:17:49', 11, 11, '-0.50000000', 5, 11),
-(18, '2023-01-19 12:18:19', 11, 11, '0.93941485', 3, 11),
-(19, '2023-01-19 12:18:19', 11, 11, '-0.50000000', 5, 11),
-(20, '2023-01-19 12:19:26', 11, 11, '0.00005120', 1, 11),
-(21, '2023-01-19 12:19:26', 11, 11, '-1.00000000', 4, 11),
-(22, '2023-01-19 12:24:01', 11, 11, '19211.38888889', 1, 11),
-(23, '2023-01-19 12:24:01', 11, 11, '-1.00000000', 4, 11),
-(24, '2023-01-19 12:24:56', 11, 11, '19211.38888889', 1, 11),
-(25, '2023-01-19 12:24:56', 11, 11, '-1.00000000', 4, 11),
-(26, '2023-01-19 12:25:50', 11, 11, '9.25925926', 1, 11),
-(27, '2023-01-19 12:25:50', 11, 11, '-10.00000000', 2, 11);
+INSERT INTO `transactions` (`id`, `id_user`, `id_currency`, `amount`, `id_author`, `status`, `id_exchange`, `date`) VALUES
+(84, 13, 5, '1424580.31514990', 13, 1, NULL, '2023-01-19 21:47:44'),
+(85, 13, 4, '-1.00000000', 13, 1, NULL, '2023-01-19 21:47:44'),
+(86, 13, 4, '-2.00000000', 13, 1, NULL, '2023-01-19 21:49:06'),
+(87, 13, 3, '5353087.63012940', 13, 1, NULL, '2023-01-19 21:49:06'),
+(88, 13, 4, '-10.00000000', 13, 1, 13, '2023-01-19 21:49:44'),
+(89, 13, 4, '10.00000000', 13, 1, 13, '2023-01-19 21:49:44'),
+(90, 13, 4, '10.00000000', 13, 1, NULL, '2023-01-19 22:22:59'),
+(91, 14, 4, '2.00000000', 13, 1, NULL, '2023-01-19 23:47:41');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -190,71 +144,31 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `iban`, `birthdate`, `password`, `mail`) VALUES
-(10, 1000, 'admin', 'admin', 'FR6184228767292619030615500', '2023-01-12', '$2y$10$/rIIiL0WGqx0dwivTUDfmu/3aW8q.F9dvqfptr.5G0TmKPUzDg7tm', 'admin@admin.admin'),
-(11, 10, 'Paul', 'Rivallin', 'FR4949872680771636452072859', '2023-01-12', '$2y$10$2mJUvVxQWYq5p6eMuQPgS.RIVDRiyoDWcoWrZWOPVPL9w/7L/2N8m', 'paul@gmail.com'),
-(12, 10, 'Jiji', 'Lefebvre', 'FR5793375612780483143678877', '2023-01-04', '$2y$10$qgUmyy2oQ33x0B5Z92y1hOL5zmnWQX0k1X6mQ6IPF9WaqS04wqOHq', 'jiji@gmail.com');
-
--- --------------------------------------------------------
+(13, 200, 'Jean-Juste', 'LEFEBVRE', 'FR6536435796343846708989115', '2023-01-04', '$2y$10$pnV3aHRNPB/UJfcfl2IpSeFM4HEONsPJww6RaFhSheaEK77TUYolC', 'fraise@gmail.com'),
+(14, 10, 'Pierre', 'Saumon', 'FR6667985796631367987257514', '2023-01-01', '$2y$10$9x6xS7wu3S8nl2XeYWRoKunBZZnHQq7EwX6X0m2j3BOF6MshH8KTe', 'cum@cum.cum');
 
 --
--- Structure de la table `withdrawals`
---
-
-CREATE TABLE `withdrawals` (
-  `id` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `owner_id` int(11) NOT NULL,
-  `amount` decimal(64,8) NOT NULL,
-  `id_currency` int(11) NOT NULL,
-  `submit` int(3) NOT NULL DEFAULT '1',
-  `id_author` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `withdrawals`
---
-
-INSERT INTO `withdrawals` (`id`, `date`, `owner_id`, `amount`, `id_currency`, `submit`, `id_author`) VALUES
-(12, '2023-01-19 10:30:37', 11, '63.00000000', 5, 2, 10),
-(13, '2023-01-19 10:31:06', 11, '52.00000000', 4, 2, 10),
-(14, '2023-01-19 10:31:29', 11, '2000.00000000', 4, 2, 10),
-(15, '2023-01-19 10:33:04', 11, '69.42000000', 1, 2, 10),
-(16, '2023-01-19 10:33:26', 11, '69.42000000', 1, 2, 10),
-(17, '2023-01-19 10:34:02', 11, '64.25520000', 1, 2, 10),
-(18, '2023-01-19 11:24:55', 11, '1000.00000000', 1, 2, 10),
-(19, '2023-01-19 11:26:15', 11, '1000.00000000', 1, 2, 10);
-
---
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `currencies`
+-- Indexes for table `currencies`
 --
 ALTER TABLE `currencies`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `deposits`
---
-ALTER TABLE `deposits`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `owner_id` (`owner_id`),
-  ADD KEY `id_currency` (`id_currency`),
-  ADD KEY `id_author` (`id_author`);
-
---
--- Index pour la table `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `storage`
+-- Indexes for table `storage`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`id`),
@@ -262,112 +176,75 @@ ALTER TABLE `storage`
   ADD KEY `id_currency` (`id_currency`);
 
 --
--- Index pour la table `transactions`
+-- Indexes for table `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_currency` (`id_currency`),
-  ADD KEY `id_sender` (`id_sender`) USING BTREE,
-  ADD KEY `id_receiver` (`id_receiver`) USING BTREE,
-  ADD KEY `id_author` (`id_author`);
+  ADD KEY `id_author` (`id_author`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_exchange` (`id_exchange`);
 
 --
--- Index pour la table `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `role_id` (`role_id`);
 
 --
--- Index pour la table `withdrawals`
---
-ALTER TABLE `withdrawals`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `owner_id` (`owner_id`),
-  ADD KEY `id_currency` (`id_currency`),
-  ADD KEY `id_author` (`id_author`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `currencies`
+-- AUTO_INCREMENT for table `currencies`
 --
 ALTER TABLE `currencies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT pour la table `deposits`
---
-ALTER TABLE `deposits`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT pour la table `storage`
+-- AUTO_INCREMENT for table `storage`
 --
 ALTER TABLE `storage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
--- AUTO_INCREMENT pour la table `transactions`
+-- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
--- AUTO_INCREMENT pour la table `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT pour la table `withdrawals`
---
-ALTER TABLE `withdrawals`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- Contraintes pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `deposits`
---
-ALTER TABLE `deposits`
-  ADD CONSTRAINT `deposits_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `deposits_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
-  ADD CONSTRAINT `deposits_ibfk_3` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
-
---
--- Contraintes pour la table `storage`
+-- Constraints for table `storage`
 --
 ALTER TABLE `storage`
-  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
-  ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `storage_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `storage_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `transactions`
+-- Constraints for table `transactions`
 --
 ALTER TABLE `transactions`
-  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`id_sender`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`id_receiver`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
-  ADD CONSTRAINT `transactions_ibfk_4` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `transactions_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transactions_ibfk_2` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transactions_ibfk_3` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transactions_ibfk_4` FOREIGN KEY (`id_exchange`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
-
---
--- Contraintes pour la table `withdrawals`
---
-ALTER TABLE `withdrawals`
-  ADD CONSTRAINT `withdrawals_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `withdrawals_ibfk_2` FOREIGN KEY (`id_currency`) REFERENCES `currencies` (`id`),
-  ADD CONSTRAINT `withdrawals_ibfk_3` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
