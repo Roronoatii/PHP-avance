@@ -44,9 +44,7 @@ checkConnected(false, "account.php");
 
         </div>
 
-        <div class="o">
-        <button type="submit">Inscription</button>
-        </div>
+        <input type="submit" name="register-submit" value="Inscription">
     </form>
 </div>
 </div>

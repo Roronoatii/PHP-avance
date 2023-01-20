@@ -56,7 +56,7 @@ checkRoleStrength(10);
             <h4><a href="transaction.php">Transaction</a></h4>
         </article>
         <article>
-            <h4><a href="exchange.php">Convertion</a></h4>
+            <h4><a href="convert.php">Convertion</a></h4>
         </article>
     </section>
 

@@ -23,9 +23,7 @@ checkConnected(false, "account.php");
         <div class="o">
             <input placeholder="Mot de passe" type="password" id="password" name="password" required>
         </div>
-        <div class="o">
-        <button type="submit">Connexion</button>
-        </div>
+        <input type="submit" name="login-submit" value="Connexion">
     </form>
 </div>
 </div>
