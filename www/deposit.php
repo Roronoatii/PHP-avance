@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Accueil';
+$bannerTitle = 'DEPOT';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 checkConnected();
@@ -12,6 +13,7 @@ checkRoleStrength(10);
 <body>
 
     <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
     <form method="POST" action="actions/form_deposit.php">
         <label for="value">Depot Montant :</label>
