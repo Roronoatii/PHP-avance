@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Mon Compte';
-$bannerTitle = 'MON COMPTE';
+$bannerTitle = 'ATTENTION';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 checkConnected();

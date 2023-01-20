@@ -99,9 +99,9 @@ checkRoleStrength(10);
 
                         if ($isWithdrawal) {
                             if ($transactionAuthor == $_SESSION['id']) {
-                                $transactionDestination = "VOUS";
+                                $transactionOrigin = "VOUS";
                             } else {
-                                $transactionDestination = $BANK_NAME;
+                                $transactionOrigin = $BANK_NAME;
                             }
 
                         } else {
@@ -111,9 +111,9 @@ checkRoleStrength(10);
                                 $receiverFirstname = $dbManager->getById('users', $transactionAuthor)['firstname'];
                                 $receiverLastname = $dbManager->getById('users', $transactionAuthor)['lastname'];
 
-                                $transactionDestination = "$receiverFirstname $receiverLastname";
+                                $transactionOrigin = "$receiverFirstname $receiverLastname";
                             } else {
-                                $transactionDestination = $BANK_NAME;
+                                $transactionOrigin = $BANK_NAME;
                             }
                         }
                     }
