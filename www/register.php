@@ -8,31 +8,85 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 checkConnected(false, "account.php");
 ?>
+<?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
 <body>
 
-    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
-    <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
-    <form method="POST" action="actions/form_register.php">
-        <label for="prenom">Prénom :</label>
-        <input type="text" id="firstname" name="firstname" required>
 
-        <label for="name">Nom :</label>
-        <input type="text" id="lastname" name="lastname" required>
 
-        <label for="email">Adresse email :</label>
-        <input type="email" id="mail" name="mail" required>
+    <div class="registers">
+    <h1 class="c"> Inscription</h1>
 
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password" required>
+    <div class="register">
+    <form action="actions/form_register.php" method="POST">
+        <div class="o">
+        <input placeholder="Prénom" type="text" id="firstname" name="firstname" required>
+        </div>
 
-        <label for="date">Date de naissance :</label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <div class="o">
+        <input placeholder="Nom" type="text" id="lastname" name="lastname" required>
+</div>
+        <div class="o">
+        <input placeholder="E-mail" type="email" id="mail" name="mail" required>
 
-        <input type="submit" name="register-submit" value="S'inscrire">
+
+        </div>
+        <div class="o">
+
+        <input placeholder="Mot de passe" type="password" id="password" name="password" required>
+        </div>
+
+
+        <div class="o">
+        <input placeholder="Date de naissance" type="date" id="birthdate" name="birthdate" required>
+
+        </div>
+
+        <div class="o">
+        <button type="submit">Inscription</button>
+        </div>
     </form>
-    <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
+</div>
+</div>
+
+
+<?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
+
+<style>
+
+    .registers{
+        border: 3px solid black;
+        margin-left: 550px;
+        margin-right: 550px;
+        padding-top: 30px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        border-radius: 30px;
+
+
+        
+    }
+    .c{
+        text-align: center;
+    }
+    .register{
+        text-align: center;
+    }
+
+    .o{
+        padding-top: 20px;
+    }
+
+    button{
+        padding-right: 70px;
+        padding-left: 70px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+    }
+    </style>
 </body>
 
 </html>
