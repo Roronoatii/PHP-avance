@@ -43,6 +43,7 @@ function checkConnected($hasToBeConnected = true, $redirection = 'login.php')
 function logout()
 {
     session_destroy();
-    header('Location: /login.php?success=logged_out');
+    unset($_SESSION['logged']);
+    header('Location: /index.php?success=logged_out');
     exit;
 }

@@ -8,4 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currency = $_POST['currency'];
 
     sendMoney($iban, $amount, $currency);
+
+    header('Location: ../manager_verify.php');
+    exit;
 }

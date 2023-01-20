@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Accueil';
+$bannerTitle = 'ACCUEIL';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 ?>
 

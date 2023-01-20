@@ -44,6 +44,22 @@ checkRoleStrength(10);
         ?>
     </section>
 
+    <h3>Outils</h3>
+    <section id="user-links" class="block">
+        <article>
+            <h4><a href="deposit.php">Dépôt</a></h4>
+        </article>
+        <article>
+            <h4><a href="withdrawal.php">Retrait</a></h4>
+        </article>
+        <article>
+            <h4><a href="transaction.php">Transaction</a></h4>
+        </article>
+        <article>
+            <h4><a href="exchange.php">Convertion</a></h4>
+        </article>
+    </section>
+
     <section id="transaction-history">
         <h3>Historique des transactions</h3>
         <table>
@@ -99,9 +115,9 @@ checkRoleStrength(10);
 
                         if ($isWithdrawal) {
                             if ($transactionAuthor == $_SESSION['id']) {
-                                $transactionDestination = "VOUS";
+                                $transactionOrigin = "VOUS";
                             } else {
-                                $transactionDestination = $BANK_NAME;
+                                $transactionOrigin = $BANK_NAME;
                             }
 
                         } else {
@@ -111,9 +127,9 @@ checkRoleStrength(10);
                                 $receiverFirstname = $dbManager->getById('users', $transactionAuthor)['firstname'];
                                 $receiverLastname = $dbManager->getById('users', $transactionAuthor)['lastname'];
 
-                                $transactionDestination = "$receiverFirstname $receiverLastname";
+                                $transactionOrigin = "$receiverFirstname $receiverLastname";
                             } else {
-                                $transactionDestination = $BANK_NAME;
+                                $transactionOrigin = $BANK_NAME;
                             }
                         }
                     }

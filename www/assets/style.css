@@ -112,6 +112,18 @@ label {
     color: white;
 }
 
+.block a {
+    text-decoration: none;
+    color: white;
+}
+
+#admin {
+    display: flex;
+    flex-wrap: none;
+    justify-content: center;
+    align-items: center;
+}
+
 .request-list {
     display: flex;
     flex-direction: column;

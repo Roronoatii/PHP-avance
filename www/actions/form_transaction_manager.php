@@ -21,4 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     createTransaction($userId_in, $currencyId, $amount, $_SESSION['id'], 1, $userId_out);
     updateMoney($userId_in, $currencyId, $amount);
+
+    header('Location: ../manager_verify.php');
+    exit;
 }
