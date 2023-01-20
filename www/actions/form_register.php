@@ -5,10 +5,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['register-submit'])) {
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
-<<<<<<< HEAD
+
         //$iban = $_POST['iban'];
-=======
->>>>>>> 648e2108b9485ebf0990a3fdd93d8ebdee7b9d74
+
+
         $birthdate = $_POST['birthdate'];
         $email = $_POST['mail'];
         $password = $_POST['password'];

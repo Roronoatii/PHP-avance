@@ -9,8 +9,7 @@ checkConnected(false, "account.php");
 ?>
 
 <body>
-    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
-    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/nav.php'; ?>
 
     <form action="actions/form_login.php" method="POST">
 
