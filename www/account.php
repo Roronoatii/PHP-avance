@@ -44,6 +44,22 @@ checkRoleStrength(10);
         ?>
     </section>
 
+    <h3>Outils</h3>
+    <section id="user-links" class="block">
+        <article>
+            <h4><a href="deposit.php">Dépôt</a></h4>
+        </article>
+        <article>
+            <h4><a href="withdrawal.php">Retrait</a></h4>
+        </article>
+        <article>
+            <h4><a href="transaction.php">Transaction</a></h4>
+        </article>
+        <article>
+            <h4><a href="exchange.php">Convertion</a></h4>
+        </article>
+    </section>
+
     <section id="transaction-history">
         <h3>Historique des transactions</h3>
         <table>

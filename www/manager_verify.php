@@ -14,6 +14,14 @@ checkRoleStrength(200);
     <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
     <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
+    <?php if ($_SESSION['role'] > 200): ?>
+        <section id="admin" class="block">
+            <article>
+                <h4><a href="userlist.php">Liste Utilisateurs</a></h4>
+            </article>
+        </section>
+    <?php endif; ?>
+
     <section id="verif-account">
         <h3>Comptes</h3>
         <form action="actions/form_verify.php" method="POST" class="request-list">
