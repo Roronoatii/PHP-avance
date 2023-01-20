@@ -14,6 +14,9 @@
 
     --banner-color: #00ffa4;
     --highlight-color: white;
+
+    --banner-gradient-start: rgb(115, 255, 0);
+    --banner-gradient-end: rgb(0, 255, 204);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -53,24 +56,44 @@ h3 {
     -webkit-text-fill-color: transparent;
 }
 
+h4 {
+    font-size: 1.5rem;
+}
+
 img {
     width: 100%;
     height: auto;
     vertical-align: middle;
 }
 
+.block {
+    margin: 50px 5%;
+    background-color: hsl(159, 100%, 50%);
+    border-radius: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: white;
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                   Header                                   */
 /* -------------------------------------------------------------------------- */
 header {
-    background-color: var(--header-color);
+    background: linear-gradient(
+        to left,
+        var(--banner-gradient-start) 5%,
+        var(--banner-gradient-end) 95%
+    );
+
+    color: hsl(0, 0%, 100%);
+
     width: 100%;
 
     position: sticky;
     top: 0;
     z-index: 100;
-
-    background-color: var(--banner-color);
 
     display: flex;
     justify-content: space-between;
@@ -79,7 +102,6 @@ header {
     padding-top: var(--header-vertical-padding);
     padding-bottom: var(--header-vertical-padding);
 
-    color: var(--header-text-color);
     font-family: var(--header-font);
     font-size: var(--header-nav-font-size);
 }
@@ -108,7 +130,7 @@ nav li {
 
 nav a {
     text-decoration: none;
-    color: var(--header-text-color);
+    color: white;
     transition: 0.2s;
 }
 
@@ -119,9 +141,21 @@ nav a:hover {
 }
 
 /* -------------------------------------------------------------------------- */
+/*                                   Footer                                   */
+/* -------------------------------------------------------------------------- */
+footer {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 5px 0;
+    color: white;
+    background-color: rgb(0, 255, 204);
+    text-align: center;
+}
+
+/* -------------------------------------------------------------------------- */
 /*                                   Banner                                   */
 /* -------------------------------------------------------------------------- */
-.custom-shape-divider-top-1674172215 {
+.banner-divider {
     position: absolute;
     top: 0;
     left: 0;
@@ -132,25 +166,40 @@ nav a:hover {
     z-index: -1;
 }
 
-.custom-shape-divider-top-1674172215 svg {
+.banner-divider svg {
     position: relative;
     display: block;
     width: calc(136% + 1.3px);
     height: 200px;
 }
 
-.custom-shape-divider-top-1674172215 .shape-fill {
-    fill: var(--banner-color);
+.banner-divider .shape-fill {
+    fill: url(#my-gradient);
 }
 
 #banner {
-    height: 100px;
+    height: 150px;
     position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 50px;
+}
+
+h2 {
+    font-size: 3rem;
 }
 
 /* -------------------------------------------------------------------------- */
 /*                                   Account                                  */
 /* -------------------------------------------------------------------------- */
+
+#user-iban {
+    text-align: center;
+    color: hsl(159, 100%, 50%);
+}
 
 /* -------------------------- Transactions History -------------------------- */
 

@@ -25,7 +25,7 @@ checkRoleStrength(10);
         </article>
     </section>
 
-    <section id="user-money">
+    <section id="user-money" class="block">
         <?php
         $sql = "SELECT * FROM storage WHERE id_user = ?";
         $userCurrencies = $dbManager->select($sql, [$_SESSION['id']]);

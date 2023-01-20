@@ -5,9 +5,13 @@ $page_title = 'Contact';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 require_once __DIR__ . '/../src/templates/partials/nav.php';
 
+checkConnected(false, "account.php");
 ?>
 
 <body>
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+
     <form action="actions/form_login.php" method="POST">
 
     <div class="connexion">
