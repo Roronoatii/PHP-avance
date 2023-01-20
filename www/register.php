@@ -1,15 +1,18 @@
 <?php
 
 require_once __DIR__ . '/../src/init.php';
-// $db
-// $_SESSION
 
-$page_title = 'Contact';
+$page_title = 'Mon Compte';
+$bannerTitle = 'MON COMPTE';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
+checkConnected(false, "account.php");
 ?>
 
 <body>
+
+    <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
     <form method="POST" action="actions/form_register.php">
         <label for="prenom">Prénom :</label>
@@ -17,7 +20,7 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
         <label for="name">Nom :</label>
         <input type="text" id="lastname" name="lastname" required>
-    
+
         <label for="email">Adresse email :</label>
         <input type="email" id="mail" name="mail" required>
 
@@ -31,4 +34,5 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
     </form>
     <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
 </body>
+
 </html>

@@ -128,3 +128,50 @@ function getUserMoney($userId, $currency)
 	$amount = $storage['amount'];
 	return $amount;
 }
+
+function displayUserList($minRole, $maxRole)
+{
+	global $dbManager;
+
+	$result = $dbManager->select("SELECT * FROM `users` WHERE `role_id` > ? AND `role_id` < ? ", [$minRole, $maxRole], 'User');
+	foreach ($result as $user) {
+		$userRoleId = $user->role_id;
+		$userRole = $dbManager->getById('roles', $userRoleId, 'Role');
+		$userRoleName = $userRole[0]->name;
+
+		echo '<div class="list-element">';
+		echo '<input type="checkbox" name="user[]" value="' . $user->id . '" id="' . $user->id . '">';
+		echo '<label for="' . $user->id . '">' . $user->firstname . ' ' . $user->lastname . ' ' . $user->mail . ' [' . $userRoleName . ']</label>';
+		echo '</div>';
+	}
+}
+
+function displayTransactionList($sign)
+{
+	global $dbManager;
+
+	$sql = "SELECT * FROM `transactions` WHERE `status` = 0 AND `amount`" . $sign . "0 AND `id_exchange` IS NULL";
+	$result = $dbManager->select($sql, [], 'Transaction');
+	foreach ($result as $withdrawal) {
+		$currencyId = $dbManager->getById('currencies', $withdrawal->id_currency, 'Transaction');
+		$currency = $currencyId[0]->name;
+
+		$currencySymbols = ['€', '$', '¥', '₿', '₽'];
+		$currencySymbol = $currencySymbols[$withdrawal->id_currency - 1];
+
+		$userId = $dbManager->getById('users', $withdrawal->id_user, 'User');
+		$userFirstname = $userId[0]->firstname;
+		$userLastname = $userId[0]->lastname;
+
+		if ($sign == '>') {
+			$name = 'deposit[]';
+		} else {
+			$name = 'withdrawal[]';
+		}
+
+		echo '<div class="list-element">';
+		echo '<input type="checkbox" name="' . $name . '" value="' . $withdrawal->id . '" id="' . $withdrawal->id . '">';
+		echo '<label for="' . $withdrawal->id . '">' . $withdrawal->amount . ' ' . $currencySymbol . ' ' . $userFirstname . ' ' . $userLastname . ' [' . $withdrawal->date . ']</label>';
+		echo '</div>';
+	}
+}

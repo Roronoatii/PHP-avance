@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Manager - Vérification';
+$bannerTitle = 'REQUÊTES';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
 checkConnected();
@@ -11,65 +12,43 @@ checkRoleStrength(200);
 <body>
 
     <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
+    <?php require_once __DIR__ . '/../src/templates/partials/banner.php'; ?>
 
-    <section id="banner">
-        <h1>REQUÊTES</h1>
-    </section>
-
-    <section id="intro">
-        <form action="actions/form_verify.php" method="POST">
+    <section id="verif-account">
+        <h3>Comptes</h3>
+        <form action="actions/form_verify.php" method="POST" class="request-list">
             <?php
-            $result = $dbManager->select("SELECT * FROM `users` WHERE `role_id` = 1", [], 'User');
-            foreach ($result as $user) {
-                echo '<input type="checkbox" name="user[]" value="' . $user->id . '">';
-                echo $user->firstname . ' ' . $user->lastname . ' ' . $user->mail . '<br>';
-            }
+            displayUserList(0, 10);
             ?>
-
-            <input type="submit" name="accept-account-submit" value="Valider">
-            <input type="submit" name="refuse-account-submit" value="Refuser">
+            <div>
+                <input type="submit" name="accept-account-submit" value="Accepter">
+                <input type="submit" name="refuse-account-submit" value="Refuser">
+            </div>
         </form>
     </section>
-    <section id="intro">
-        <form action="actions/form_verify.php" method="POST">
+    <section id="verif-deposit">
+        <h3>Dépôts</h3>
+        <form action="actions/form_verify.php" method="POST" class="request-list">
             <?php
-            $result = $dbManager->select("SELECT * FROM `transactions` WHERE `status` = 0 AND `amount` > 0 AND `id_exchange` IS NULL", [], 'Transaction');
-            foreach ($result as $deposit) {
-                $currencyId = $dbManager->getById('currencies', $deposit->id_currency, 'Transaction');
-                $currency = $currencyId[0]->name;
-
-                $userId = $dbManager->getById('users', $deposit->id_user, 'User');
-                $userFirstname = $userId[0]->firstname;
-                $userLastname = $userId[0]->lastname;
-
-                echo '<input type="checkbox" name="deposit[]" value="' . $deposit->id . '">';
-                echo $deposit->date . ' ' . $deposit->amount . ' ' . $currency . ' ' . $userFirstname . ' ' . $userLastname . '<br>';
-            }
+            displayTransactionList(">");
             ?>
 
-            <input type="submit" name="accept-deposit-submit" value="Valider">
-            <input type="submit" name="refuse-deposit-submit" value="Refuser">
+            <div>
+                <input type="submit" name="accept-deposit-submit" value="Valider">
+                <input type="submit" name="refuse-deposit-submit" value="Refuser">
+            </div>
         </form>
     </section>
-    <section id="intro">
-        <form action="actions/form_verify.php" method="POST">
+    <section id="verif-withdrawal">
+        <h3>Retraits</h3>
+        <form action="actions/form_verify.php" method="POST" class="request-list">
             <?php
-            $result = $dbManager->select("SELECT * FROM `transactions` WHERE `status` = 0 AND `amount` < 0 AND `id_exchange` IS NULL", [], 'Transaction');
-            foreach ($result as $withdrawal) {
-                $currencyId = $dbManager->getById('currencies', $withdrawal->id_currency, 'Transaction');
-                $currency = $currencyId[0]->name;
-
-                $userId = $dbManager->getById('users', $withdrawal->id_user, 'User');
-                $userFirstname = $userId[0]->firstname;
-                $userLastname = $userId[0]->lastname;
-
-                echo '<input type="checkbox" name="withdrawal[]" value="' . $withdrawal->id . '">';
-                echo $withdrawal->date . ' ' . $withdrawal->amount . ' ' . $currency . ' ' . $userFirstname . ' ' . $userLastname . '<br>';
-            }
+            displayTransactionList("<");
             ?>
-
-            <input type="submit" name="accept-withdrawal-submit" value="Valider">
-            <input type="submit" name="refuse-withdrawal-submit" value="Refuser">
+            <div>
+                <input type="submit" name="accept-withdrawal-submit" value="Valider">
+                <input type="submit" name="refuse-withdrawal-submit" value="Refuser">
+            </div>
         </form>
     </section>
     <section>
