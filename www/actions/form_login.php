@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['lastname'] = $user[0]->lastname;
         $_SESSION['mail'] = $user[0]->mail;
         $_SESSION['birthdate'] = $user[0]->birthdate;
+        $_SESSION['iban'] = $user[0]->iban;
         $_SESSION['logged'] = true;
 
         header('Location: ../index.php?login=success');

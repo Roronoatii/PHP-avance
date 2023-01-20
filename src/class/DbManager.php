@@ -54,7 +54,7 @@ class DbManager
         return $query->fetchAll();
     }
 
-    function getById(string $tableName, $id, string $className)
+    function getById(string $tableName, $id, string $className = null)
     {
         $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
         return $this->select($sql, [$id], $className);
