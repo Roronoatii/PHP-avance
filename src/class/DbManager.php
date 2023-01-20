@@ -54,7 +54,7 @@ class DbManager
         return $query->fetchAll();
     }
 
-    function getById(string $tableName, $id, string $className)
+    function getById(string $tableName, $id, string $className = null)
     {
         $sql = "SELECT * FROM " . $tableName . " WHERE id = ?";
         return $this->select($sql, [$id], $className);
@@ -69,7 +69,7 @@ class DbManager
         return $this->select($sql, [$id], $className);
     }
 
-    function getBy(string $tableName, string $column, $value, string $className =null)
+    function getBy(string $tableName, string $column, $value, string $className = null)
     {
         $sql = "SELECT * FROM " . $tableName . " WHERE " . $column . " = ?";
         return $this->select($sql, [$value], $className);
@@ -97,13 +97,12 @@ class DbManager
         $sql = "UPDATE " . $tableName . " SET ";
         foreach ($data as $key => $value) {
             if ($key != 'id') {
-                $sql .= $key . " = '" . $value . "', ";
+                $sql .= $key . " = " . $value . ", ";
             }
         }
 
         $id = $data['id'];
         $sql = substr($sql, 0, -2) . " WHERE id = " . $id;
-        // substr($sql, 0, -2) remove last comma
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $id;

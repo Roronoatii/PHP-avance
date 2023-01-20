@@ -11,10 +11,8 @@ require_once __DIR__ . '/../src/templates/partials/html_head.php';
 
     <?php require_once __DIR__ . '/../src/templates/partials/header.php'; ?>
 
-
-
     <?php require_once __DIR__ . '/../src/templates/partials/footer.php';
-     ?>
+    ?>
 </body>
 
 </html>
