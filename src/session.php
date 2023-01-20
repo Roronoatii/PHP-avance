@@ -15,7 +15,6 @@ function checkConnected($hasToBeConnected = true, $redirection = 'login.php')
     $isConnected = isset($_SESSION['logged']) && $_SESSION['logged'] == true;
 
     if ($hasToBeConnected != $isConnected) {
-
         $header = 'Location: /' . $redirection;
         if (!$isConnected) {
             $header .= '?error=not_connected';
