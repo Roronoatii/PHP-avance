@@ -14,6 +14,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    if (isset($_POST['refuse-account-submit'])) {
+        // get only checked checkboxes in the form
+        $users = $_POST['user'];
+
+        foreach ($users as $user) {
+            // update the role of the users
+            $userId = intval($user);
+            $db->query("DELETE FROM users WHERE id = $userId");
+        }
+    }
+
     if (isset($_POST['accept-deposit-submit'])) {
         $deposits = $_POST['deposit'];
 
@@ -27,6 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    if (isset($_POST['refuse-deposit-submit'])) {
+        $deposits = $_POST['deposit'];
+
+        foreach ($deposits as $deposit) {
+
+            $depositId = intval($deposit);
+            updateTransaction($depositId, -1);
+        }
+    }
+
     if (isset($_POST['accept-withdrawal-submit'])) {
         $withdrawals = $_POST['withdrawal'];
 
@@ -37,7 +58,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             acceptTransaction($withdrawalId);
         }
+    }
 
+    if (isset($_POST['refuse-withdrawal-submit'])) {
+        $withdrawals = $_POST['withdrawal'];
+
+        foreach ($withdrawals as $withdrawal) {
+
+            $withdrawalId = intval($withdrawal);
+            updateTransaction($withdrawalId, -1);
+        }
     }
 }
 

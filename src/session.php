@@ -1,12 +1,26 @@
 <?php
 require_once __DIR__ . '/init.php';
 
-function checkRoleStrength($requiredStrength, $redirection = 'index.php')
+function checkRoleStrength($requiredStrength, $redirection = 'index.php', $invert = false)
 {
     $userRoleStrength = $_SESSION['role'];
 
-    if ($userRoleStrength < $requiredStrength) {
+    if ($userRoleStrength == 0 && $_SERVER['REQUEST_URI'] != '/banned.php') {
+        header('Location: /banned.php');
+        exit;
+    }
+
+    $hasNotRequiredStrength = $userRoleStrength < $requiredStrength;
+    if ($invert) {
+        $hasNotRequiredStrength = !$hasNotRequiredStrength;
+    }
+    if ($hasNotRequiredStrength) {
+        if (!$invert && $userRoleStrength == 1) {
+            header('Location: /waiting.php');
+            exit;
+        }
         header('Location: /' . $redirection . '?error=not_allowed');
+        exit;
     }
 }
 
@@ -24,4 +38,12 @@ function checkConnected($hasToBeConnected = true, $redirection = 'login.php')
         header($header);
         exit;
     }
+}
+
+function logout()
+{
+    session_destroy();
+    unset($_SESSION['logged']);
+    header('Location: /index.php?success=logged_out');
+    exit;
 }

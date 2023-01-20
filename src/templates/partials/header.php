@@ -2,7 +2,7 @@
 
     <nav>
         <div class="s">
-        <h1>LA SUPER BANQUE</h1>
+        <h1><a href="index.php">LA SUPER BANQUE</a></h1>
 
         </div>
 
@@ -25,8 +25,8 @@
     <p class="p">Rapide - Stable - Efficace</p>
 </div>
    <div class="button">
-   <button>S'incrire</button>
-   <button>Se connecter</button>
+   <button><a href="register.php">S'incrire</a></button>
+   <button><a href="login.php">Se connecter</a></button>
 
 </div>
 </header>
@@ -37,6 +37,10 @@
 </section>
 <style>
 
+a{
+    text-decoration: none;
+    color: white;
+}
 body{
     margin: 0;
      padding: 0;
@@ -91,6 +95,11 @@ text-transform: uppercase;
         display: flex;
         flex-direction: column;
         padding-right: 550px;        
+    }
+
+    .s a{
+        text-decoration:none;
+        color: white;
     }
     .h{
         display: flex;

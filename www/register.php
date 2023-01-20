@@ -1,16 +1,17 @@
 <?php
 
 require_once __DIR__ . '/../src/init.php';
-// $db
-// $_SESSION
 
-$page_title = 'Contact';
+$page_title = 'Mon Compte';
+$bannerTitle = 'MON COMPTE';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
 require_once __DIR__ . '/../src/templates/partials/nav.php';
 
+checkConnected(false, "account.php");
 ?>
 
 <body>
+
 
     <form method="POST" action="actions/form_register.php">
 
@@ -20,6 +21,7 @@ require_once __DIR__ . '/../src/templates/partials/nav.php';
         <input placeholder="Nom" type="text" id="lastname" name="lastname" required>
 </div>
 
+    
 <div class="o">
     
         <input placeholder="Prénom" type="text" id="firstname" name="firstname" required>
@@ -27,7 +29,6 @@ require_once __DIR__ . '/../src/templates/partials/nav.php';
 <div class="o">
         <input placeholder="Adresse e-mail" type="email" id="mail" name="mail" required>
 </div>
-
 <div class="o">
         <input placeholder="Mot de passe" type="password" id="password" name="password" required>
 </div>
@@ -83,4 +84,5 @@ require_once __DIR__ . '/../src/templates/partials/nav.php';
         </style>
     <?php require_once __DIR__ . '/../src/templates/partials/footer.php'; ?>
 </body>
+
 </html>

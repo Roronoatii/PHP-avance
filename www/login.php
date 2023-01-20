@@ -3,7 +3,6 @@ require_once __DIR__ . '/../src/init.php';
 
 $page_title = 'Contact';
 require_once __DIR__ . '/../src/templates/partials/html_head.php';
-require_once __DIR__ . '/../src/templates/partials/nav.php';
 
 checkConnected(false, "account.php");
 ?>

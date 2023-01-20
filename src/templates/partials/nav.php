@@ -2,7 +2,7 @@
 <body>
 <nav>
         <div class="s">
-        <h1 class="logo">LA SUPER BANQUE</h1>
+        <h1 class="logo"><a href="index.php">LA SUPER BANQUE</a></h1>
 
         </div>
 
@@ -46,6 +46,12 @@
 
     .logo{
         font-size: 30px;
+        text-decoration:none;
+    }
+
+    .logo a{
+        text-decoration:none;
+        color: white;
     }
     .h{
         display: flex;
